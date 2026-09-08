@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agents | ZEMEN ዘመን</title>
+
+<meta name="description" content="What AI agents are, how they work, the types that exist, and where they are already deployed — a guide from ZEMEN ዘመን.">
+<meta name="theme-color" content="#0D1017">
+<meta name="color-scheme" content="dark">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Agents | ZEMEN ዘመን">
+<meta property="og:description" content="Autonomous systems that perceive, reason, act and remember — explained.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230D1017'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='%23E2B872' font-family='serif'%3E%E1%8B%98%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&amp;family=Noto+Serif+Ethiopic:wght@400;700&amp;display=swap">
+
+<style>
+/* ============================================================
+   ZEMEN ዘመን — shared tokens (identical to index.html)
+   Ground: ink.  Illumination: gold.  Rubric: red, used sparingly.
+   ============================================================ */
+:root{
+  --ink:        #0D1017;
+  --band:       #10141B;
+  --panel:      #151A23;
+  --ink-sunk:   #090C11;
+
+  --parchment:  #EDE8DF;
+  --muted:      #9C9A94;
+  --faint:      #6F6E6A;
+
+  --gold:       #E2B872;
+  --gold-deep:  #B98A3F;
+
+  /* illumination palette — manuscript pigments, used for categories */
+  --rubric:     #C6503C;
+  --verdigris:  #74A08C;
+  --indigo:     #7E8FC0;
+  --clay:       #C77B52;
+  --bone:       #CFC7B8;
+
+  --line:       rgba(237,232,223,.12);
+  --line-soft:  rgba(237,232,223,.07);
+
+  --sans: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --serif: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  --ethiopic: "Noto Serif Ethiopic", "Nyala", "Abyssinica SIL", var(--serif);
+
+  --measure: 62ch;
+  --gutter: clamp(20px, 5vw, 56px);
+  --max: 1240px;
+  --radius: 10px;
+  --masthead: 74px;
+
+  --step--1: clamp(.86rem, .83rem + .15vw, .95rem);
+  --step-0:  clamp(1.06rem, 1rem + .3vw, 1.2rem);
+  --step-1:  clamp(1.25rem, 1.12rem + .6vw, 1.55rem);
+  --step-2:  clamp(1.7rem, 1.4rem + 1.5vw, 2.6rem);
+  --step-3:  clamp(2.4rem, 1.7rem + 3.4vw, 4.6rem);
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+
+body{
+  background:var(--ink);
+  color:var(--parchment);
+  font-family:var(--sans);
+  font-size:var(--step-0);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img,svg,canvas{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+ul{ list-style:none; }
+
+:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:4px; }
+
+.inner{ width:100%; max-width:var(--max); margin-inline:auto; padding-inline:var(--gutter); }
+
+.skip{
+  position:absolute; left:-9999px; top:12px; z-index:999;
+  padding:12px 18px; background:var(--gold); color:var(--ink);
+  font-weight:700; border-radius:8px;
+}
+.skip:focus{ left:16px; }
+
+/* icon sprite */
+.ico{
+  width:20px; height:20px; flex:none;
+  fill:none; stroke:currentColor;
+  stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round;
+}
+.ico-lg{ width:26px; height:26px; }
+
+/* ============================================================
+   Masthead
+   ============================================================ */
+.masthead{
+  position:sticky; top:0; z-index:200;
+  background:rgba(13,16,23,.85);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--line-soft);
+}
+.masthead-inner{
+  min-height:var(--masthead);
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+  position:relative;
+}
+.brand{ display:inline-flex; align-items:center; gap:12px; font-weight:600; font-size:1rem; letter-spacing:.02em; }
+.brand-mark{
+  width:38px; height:38px; flex:none;
+  display:grid; place-items:center;
+  border:1px solid rgba(226,184,114,.42); border-radius:10px;
+  background:rgba(226,184,114,.09);
+  color:var(--gold); font-family:var(--ethiopic); font-size:1.25rem; line-height:1; padding-bottom:2px;
+}
+.brand-amharic{ font-family:var(--ethiopic); font-weight:700; }
+
+.nav{ display:flex; align-items:center; gap:clamp(18px,3vw,34px); }
+.nav a{
+  color:var(--muted); font-size:var(--step--1); font-weight:500;
+  padding-block:6px; border-bottom:1px solid transparent;
+  transition:color .18s ease, border-color .18s ease;
+}
+.nav a:hover{ color:var(--parchment); border-bottom-color:var(--gold); }
+.nav a[aria-current="page"]{ color:var(--parchment); border-bottom-color:var(--gold-deep); }
+
+.menu-btn{
+  display:none; align-items:center; gap:9px;
+  padding:9px 14px; border:1px solid var(--line); border-radius:10px;
+  background:transparent; color:var(--parchment);
+  font:inherit; font-size:var(--step--1); font-weight:600; cursor:pointer;
+}
+.menu-btn:hover{ border-color:rgba(226,184,114,.45); }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero{
+  position:relative; overflow:hidden;
+  padding:clamp(56px,9vw,110px) 0 clamp(48px,7vw,90px);
+  border-bottom:1px solid var(--line);
+}
+.hero-wash{
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, rgba(226,184,114,.11), transparent 65%),
+    radial-gradient(ellipse 50% 45% at 92% 90%, rgba(198,80,60,.07), transparent 60%);
+}
+.hero-rules{
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(226,184,114,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226,184,114,.035) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 70% 70% at 50% 40%, #000, transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 70% at 50% 40%, #000, transparent 78%);
+}
+#nodeCanvas{ position:absolute; inset:0; z-index:0; width:100%; height:100%; pointer-events:none; }
+.hero-inner{ position:relative; z-index:1; }
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  color:var(--muted); font-size:var(--step--1); font-weight:500; margin-bottom:22px;
+}
+.pip{
+  width:7px; height:7px; border-radius:50%; flex:none;
+  background:var(--rubric); box-shadow:0 0 0 4px rgba(198,80,60,.16);
+}
+.hero h1{
+  font-family:var(--serif); font-variation-settings:"opsz" 144;
+  font-weight:600; font-size:var(--step-3); line-height:1.03;
+  letter-spacing:-.03em; max-width:16ch; text-wrap:balance;
+}
+.hero .lede{
+  margin-top:22px; max-width:var(--measure);
+  color:var(--muted); font-size:var(--step-1); line-height:1.55;
+}
+.btn-group{ display:flex; gap:14px; flex-wrap:wrap; margin-top:34px; }
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  min-height:52px; padding:0 26px; border-radius:var(--radius);
+  border:1px solid var(--line); font-weight:600; font-size:var(--step--1); letter-spacing:.02em;
+  transition:background-color .18s ease, border-color .18s ease;
+}
+.btn-p{ background:var(--gold); border-color:var(--gold); color:#181206; }
+.btn-p:hover{ background:#EFC98C; border-color:#EFC98C; }
+.btn-o:hover{ border-color:rgba(226,184,114,.5); background:rgba(226,184,114,.07); }
+
+/* ============================================================
+   Contents strip
+   ============================================================ */
+.toc{
+  position:sticky; top:var(--masthead); z-index:100;
+  background:rgba(16,20,27,.92);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  overflow-x:auto; scrollbar-width:none;
+}
+.toc::-webkit-scrollbar{ display:none; }
+.toc ul{
+  display:flex; gap:clamp(16px,3vw,30px);
+  max-width:var(--max); margin-inline:auto;
+  padding:14px var(--gutter); white-space:nowrap;
+}
+.toc a{
+  color:var(--muted); font-size:var(--step--1); font-weight:500;
+  padding-bottom:3px; border-bottom:1px solid transparent;
+  transition:color .18s ease, border-color .18s ease;
+}
+.toc a:hover{ color:var(--gold); border-bottom-color:var(--gold-deep); }
+
+/* ============================================================
+   Sections
+   ============================================================ */
+section{ padding-block:clamp(56px,8vw,96px); scroll-margin-top:calc(var(--masthead) + 58px); }
+.band{ background:var(--band); border-block:1px solid var(--line-soft); }
+
+.section-head{
+  display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between;
+  gap:10px 32px; padding-bottom:20px; border-bottom:1px solid var(--line);
+}
+.section-head h2{
+  font-family:var(--serif); font-variation-settings:"opsz" 90;
+  font-weight:600; font-size:var(--step-2); letter-spacing:-.025em;
+}
+.section-head .sub{ color:var(--faint); font-size:var(--step--1); max-width:46ch; }
+
+h3{ font-family:var(--serif); font-variation-settings:"opsz" 60; font-weight:600; letter-spacing:-.02em; }
+
+.panel{
+  background:var(--panel); border:1px solid var(--line);
+  border-radius:var(--radius);
+}
+
+/* ── Four pillars ── */
+.intro-grid{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(28px,5vw,64px); align-items:center; margin-top:clamp(32px,5vw,52px);
+}
+.intro-visual{
+  position:relative; aspect-ratio:1/.92;
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  overflow:hidden;
+}
+.pillars{ display:flex; flex-direction:column; gap:22px; }
+.pillar{ display:flex; gap:16px; align-items:flex-start; }
+.pillar .ico{ color:var(--gold); margin-top:5px; }
+.pillar h3{ font-size:1.12rem; margin-bottom:3px; }
+.pillar p{ color:var(--muted); font-size:.94rem; max-width:52ch; }
+
+/* ── Pipeline ── */
+.pipeline{
+  display:grid; grid-template-columns:repeat(5,1fr); gap:0;
+  margin-top:clamp(32px,5vw,52px);
+  border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+  background:var(--panel);
+}
+.pipe-step{ padding:26px 20px; border-left:1px solid var(--line-soft); }
+.pipe-step:first-child{ border-left:0; }
+.pipe-num{ color:var(--gold-deep); font-size:.8rem; font-weight:700; letter-spacing:.06em; }
+.pipe-step .ico{ color:var(--gold); margin:14px 0 12px; }
+.pipe-step h4{ font-family:var(--serif); font-weight:600; font-size:1.02rem; margin-bottom:5px; letter-spacing:-.02em; }
+.pipe-step p{ color:var(--muted); font-size:.85rem; line-height:1.5; }
+
+.diagram-wrap{
+  margin-top:clamp(32px,5vw,48px); padding:26px;
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+}
+#networkCanvas{ width:100%; height:240px; }
+.diagram-cap{ color:var(--faint); font-size:.82rem; margin-top:14px; text-align:center; }
+
+/* ── Types ── */
+.types-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(272px,1fr));
+  gap:1px; margin-top:clamp(32px,5vw,52px);
+  background:var(--line-soft); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+}
+.type-card{
+  background:var(--ink); padding:30px 26px;
+  transition:background-color .2s ease;
+}
+.band .type-card{ background:var(--band); }
+.type-card:hover{ background:var(--panel); }
+.type-card .ico{ color:var(--kind,var(--gold)); }
+.type-card h3{ font-size:1.2rem; margin:16px 0 8px; }
+.type-card p{ color:var(--muted); font-size:.9rem; line-height:1.6; }
+.type-tag{
+  display:inline-block; margin-top:16px; padding:4px 12px; border-radius:999px;
+  font-size:.75rem; font-weight:600;
+  color:var(--kind,var(--gold)); border:1px solid currentColor; opacity:.85;
+}
+
+/* ── Tabs ── */
+.tab-nav{ display:flex; gap:10px; flex-wrap:wrap; margin:clamp(28px,4vw,40px) 0 26px; }
+.tab-btn{
+  display:inline-flex; align-items:center; gap:9px;
+  padding:11px 20px; border-radius:var(--radius);
+  border:1px solid var(--line); background:transparent; color:var(--muted);
+  font:inherit; font-size:var(--step--1); font-weight:600; cursor:pointer;
+  transition:all .18s ease;
+}
+.tab-btn:hover{ color:var(--parchment); border-color:rgba(226,184,114,.4); }
+.tab-btn[aria-selected="true"]{ background:var(--gold); border-color:var(--gold); color:#181206; }
+.tab-panel[hidden]{ display:none; }
+
+.use-list{ display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:1px;
+  background:var(--line-soft); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+.use-item{ display:flex; gap:16px; padding:24px; background:var(--band); transition:background-color .2s ease; }
+.use-item:hover{ background:var(--panel); }
+.use-item .ico{ color:var(--gold); margin-top:4px; }
+.use-item h4{ font-family:var(--serif); font-weight:600; font-size:1.05rem; letter-spacing:-.02em; margin-bottom:5px; }
+.use-item p{ color:var(--muted); font-size:.89rem; line-height:1.55; }
+
+/* ── Examples ── */
+.examples{ display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:20px; margin-top:clamp(32px,5vw,52px); }
+.example-card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px; transition:border-color .2s ease;
+}
+.example-card:hover{ border-color:rgba(226,184,114,.4); }
+.ex-head{ display:flex; gap:15px; align-items:flex-start; padding-bottom:18px; border-bottom:1px solid var(--line-soft); }
+.ex-icon{
+  width:46px; height:46px; flex:none; display:grid; place-items:center;
+  border-radius:9px; border:1px solid currentColor; color:var(--kind,var(--gold));
+  background:color-mix(in srgb, currentColor 10%, transparent);
+}
+.ex-head h3{ font-size:1.1rem; margin-bottom:2px; }
+.ex-sector{ color:var(--faint); font-size:.8rem; }
+.ex-body{ color:var(--muted); font-size:.9rem; line-height:1.6; padding:18px 0; }
+.ex-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+.ex-tag{ font-size:.74rem; font-weight:500; padding:3px 11px; border-radius:999px; border:1px solid var(--line); color:var(--faint); }
+
+/* ── Timeline ── */
+.timeline{ position:relative; margin-top:clamp(32px,5vw,52px); padding-left:34px; max-width:700px; }
+.timeline::before{ content:''; position:absolute; left:4px; top:6px; bottom:6px; width:1px; background:var(--line); }
+.tl-item{ position:relative; padding-bottom:32px; }
+.tl-item:last-child{ padding-bottom:0; }
+.tl-item::before{
+  content:''; position:absolute; left:-34px; top:9px;
+  width:9px; height:9px; border-radius:50%;
+  background:var(--gold); box-shadow:0 0 0 4px rgba(226,184,114,.16);
+}
+.tl-year{ color:var(--gold); font-size:.82rem; font-weight:700; letter-spacing:.05em; }
+.tl-item h4{ font-family:var(--serif); font-weight:600; font-size:1.12rem; letter-spacing:-.02em; margin:4px 0 5px; }
+.tl-item p{ color:var(--muted); font-size:.9rem; }
+
+/* ── Stats ── */
+.stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1px;
+  margin-top:clamp(32px,5vw,52px);
+  background:var(--line-soft); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+.stat{ background:var(--ink); padding:30px 22px; }
+.stat .num{
+  font-family:var(--serif); font-variation-settings:"opsz" 144;
+  font-weight:900; font-size:clamp(2.4rem,4.5vw,3.4rem); line-height:1;
+  color:var(--gold); letter-spacing:-.04em;
+}
+.stat .lbl{ color:var(--muted); font-size:.87rem; margin-top:12px; }
+.stat .src{ display:block; color:var(--faint); font-size:.76rem; margin-top:4px; }
+
+/* ── News ── */
+.news-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:20px; margin-top:clamp(32px,5vw,52px); }
+.news-card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px; display:flex; flex-direction:column; transition:border-color .2s ease;
+}
+.news-card:hover{ border-color:rgba(226,184,114,.38); }
+.news-meta{ display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.news-date{ color:var(--faint); font-size:.8rem; }
+.news-badge{
+  font-size:.74rem; font-weight:600; padding:2px 11px; border-radius:999px;
+  color:var(--gold); border:1px solid rgba(226,184,114,.35); background:rgba(226,184,114,.08);
+}
+.news-card h3{ font-size:1.08rem; line-height:1.35; margin-bottom:9px; }
+.news-card p{ color:var(--muted); font-size:.89rem; line-height:1.6; }
+.news-link{ margin-top:auto; padding-top:18px; color:var(--gold); font-size:.85rem; font-weight:600; display:inline-flex; align-items:center; gap:7px; }
+.news-link:hover{ text-decoration:underline; text-underline-offset:3px; }
+.news-card.is-lead{ border-color:rgba(198,80,60,.38); }
+.news-card.is-lead .news-badge{ color:var(--rubric); border-color:rgba(198,80,60,.4); background:rgba(198,80,60,.09); }
+
+/* ── Closing band ── */
+.closing{
+  padding:clamp(34px,5vw,60px); text-align:center;
+  border:1px solid var(--line); border-left:3px solid var(--gold-deep);
+  border-radius:6px; background:var(--panel);
+}
+.closing h2{ font-family:var(--serif); font-variation-settings:"opsz" 90; font-weight:600; font-size:var(--step-2); letter-spacing:-.025em; }
+.closing p{ color:var(--muted); max-width:52ch; margin:14px auto 0; }
+.closing .btn-group{ justify-content:center; }
+
+/* ── Footer ── */
+.site-footer{
+  border-top:1px solid var(--line); background:var(--ink-sunk);
+  padding-block:40px 52px; color:var(--muted); font-size:var(--step--1);
+}
+.footer-inner{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px 40px; }
+.footer-nav{ display:flex; flex-wrap:wrap; gap:22px; }
+.footer-nav a:hover{ color:var(--parchment); }
+
+/* ── Reveal ── */
+.reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.visible{ opacity:1; transform:none; }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width:1000px){
+  .pipeline{ grid-template-columns:repeat(2,1fr); }
+  .pipe-step{ border-top:1px solid var(--line-soft); }
+  .pipe-step:nth-child(-n+2){ border-top:0; }
+  .pipe-step:nth-child(odd){ border-left:0; }
+}
+@media (max-width:860px){
+  .intro-grid{ grid-template-columns:1fr; }
+}
+@media (max-width:720px){
+  .nav{
+    display:none; position:absolute; inset-inline:0; top:calc(100% + 10px);
+    flex-direction:column; align-items:stretch; gap:0; padding:8px;
+    border:1px solid var(--line); border-radius:12px; background:var(--panel);
+    box-shadow:0 24px 60px rgba(0,0,0,.5);
+  }
+  .nav[data-open="true"]{ display:flex; }
+  .nav a{ padding:14px 12px; font-size:var(--step-0); border-bottom:1px solid var(--line-soft); }
+  .nav a:last-child{ border-bottom:0; }
+  .menu-btn{ display:inline-flex; }
+  .pipeline{ grid-template-columns:1fr; }
+  .pipe-step{ border-left:0; border-top:1px solid var(--line-soft); }
+  .pipe-step:first-child{ border-top:0; }
+  .btn-group .btn{ flex:1 1 100%; }
+}
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  .reveal{ opacity:1; transform:none; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ICON SPRITE -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></symbol>
+  <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4z"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></symbol>
+  <symbol id="i-nav" viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-4"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M16.5 9.4L7.5 4.21"/><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 16h.01M16 16h.01"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 2v6L4 19a2 2 0 001.8 3h12.4a2 2 0 001.8-3L15 8V2"/><path d="M9 2h6M7.5 14h9"/></symbol>
+  <symbol id="i-network" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-case" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+</svg>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="inner masthead-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">ዘ</span>
+      <span>ZEMEN <span class="brand-amharic" lang="am">ዘመን</span></span>
+    </a>
+
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav">
+      <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg> Menu
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="index.html#explore">Explore</a>
+      <a href="ai-world.html">AI World</a>
+      <a href="ai-agents.html" aria-current="page">AI Agents</a>
+      <a href="girum-portfolio.html">Portfolio</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-wash" aria-hidden="true"></div>
+  <div class="hero-rules" aria-hidden="true"></div>
+  <canvas id="nodeCanvas" aria-hidden="true"></canvas>
+
+  <div class="inner hero-inner">
+    <p class="eyebrow"><span class="pip" aria-hidden="true"></span>A guide, updated by hand</p>
+    <h1>What AI agents are, and why they matter</h1>
+    <p class="lede">
+      An AI agent is an autonomous software system that perceives its environment,
+      reasons about a goal, and takes action to reach it — without waiting for a
+      human at every step.
+    </p>
+    <div class="btn-group">
+      <a class="btn btn-p" href="#what">Start reading</a>
+      <a class="btn btn-o" href="#news">Latest developments</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENTS -->
+<nav class="toc" aria-label="On this page">
+  <ul>
+    <li><a href="#what">What they are</a></li>
+    <li><a href="#how">How they work</a></li>
+    <li><a href="#types">Types</a></li>
+    <li><a href="#everyday">Where you meet them</a></li>
+    <li><a href="#examples">In production</a></li>
+    <li><a href="#history">History</a></li>
+    <li><a href="#stats">By the numbers</a></li>
+    <li><a href="#news">Latest news</a></li>
+  </ul>
+</nav>
+
+<!-- WHAT THEY ARE -->
+<section id="what">
+  <div class="inner">
+    <div class="section-head reveal">
+      <h2>Understanding AI agents</h2>
+      <p class="sub">An agent is more than a chatbot. It sets sub-goals, uses tools, remembers context, and takes multi-step action.</p>
+    </div>
+
+    <div class="intro-grid">
+      <div class="intro-visual reveal">
+        <svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%" role="img" aria-label="The agent loop: perceive, reason, act, remember">
+          <defs>
+            <marker id="tip" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#E2B872" opacity="0.75"/>
+            </marker>
+            <filter id="soft"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+
+          <circle cx="170" cy="150" r="110" fill="none" stroke="rgba(226,184,114,.12)"/>
+          <circle cx="170" cy="150" r="75" fill="none" stroke="rgba(226,184,114,.07)"/>
+          <circle cx="170" cy="150" r="110" fill="none" stroke="rgba(226,184,114,.24)" stroke-width="1.5" stroke-dasharray="12 9">
+            <animateTransform attributeName="transform" type="rotate" from="0 170 150" to="360 170 150" dur="28s" repeatCount="indefinite"/>
+          </circle>
+
+          <circle cx="170" cy="150" r="34" fill="rgba(226,184,114,.1)" stroke="#E2B872" stroke-width="1.5" filter="url(#soft)"/>
+          <text x="170" y="154" text-anchor="middle" fill="#E2B872" font-size="11" font-family="Archivo,sans-serif" font-weight="600" letter-spacing="1">AGENT</text>
+
+          <circle cx="170" cy="40" r="27" fill="rgba(226,184,114,.07)" stroke="#E2B872" stroke-width="1.1"/>
+          <text x="170" y="44" text-anchor="middle" fill="#EDE8DF" font-size="9" font-family="Archivo,sans-serif">Perceive</text>
+
+          <circle cx="280" cy="150" r="27" fill="rgba(126,143,192,.08)" stroke="#7E8FC0" stroke-width="1.1"/>
+          <text x="280" y="154" text-anchor="middle" fill="#EDE8DF" font-size="9" font-family="Archivo,sans-serif">Reason</text>
+
+          <circle cx="170" cy="259" r="27" fill="rgba(116,160,140,.08)" stroke="#74A08C" stroke-width="1.1"/>
+          <text x="170" y="263" text-anchor="middle" fill="#EDE8DF" font-size="9" font-family="Archivo,sans-serif">Act</text>
+
+          <circle cx="60" cy="150" r="27" fill="rgba(199,123,82,.08)" stroke="#C77B52" stroke-width="1.1"/>
+          <text x="60" y="154" text-anchor="middle" fill="#EDE8DF" font-size="9" font-family="Archivo,sans-serif">Memory</text>
+
+          <path d="M 191 65 Q 250 95 255 124" stroke="#E2B872" stroke-width="1.1" fill="none" stroke-opacity=".55" marker-end="url(#tip)"/>
+          <path d="M 255 176 Q 240 231 193 251" stroke="#7E8FC0" stroke-width="1.1" fill="none" stroke-opacity=".55" marker-end="url(#tip)"/>
+          <path d="M 147 257 Q 100 236 82 177" stroke="#74A08C" stroke-width="1.1" fill="none" stroke-opacity=".55" marker-end="url(#tip)"/>
+          <path d="M 84 123 Q 100 70 147 54" stroke="#C77B52" stroke-width="1.1" fill="none" stroke-opacity=".55" marker-end="url(#tip)"/>
+
+          <path id="loop-path" d="M 170 66 Q 250 95 255 150 Q 250 205 170 232 Q 90 205 85 150 Q 90 95 170 66" fill="none"/>
+          <circle r="4" fill="#E2B872" filter="url(#soft)">
+            <animateMotion dur="5s" repeatCount="indefinite"><mpath href="#loop-path"/></animateMotion>
+          </circle>
+        </svg>
+      </div>
+
+      <div class="reveal">
+        <h3 style="font-size:1.35rem;margin-bottom:24px;">The four pillars of an agent</h3>
+        <div class="pillars">
+          <div class="pillar">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-eye"/></svg>
+            <div>
+              <h3>Perception</h3>
+              <p>Takes in the environment — text, images, sensor readings, API responses, or a person's instruction.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-cpu"/></svg>
+            <div>
+              <h3>Reasoning</h3>
+              <p>A language model or decision engine interprets the input, breaks the goal into sub-tasks, and picks the next action.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-bolt"/></svg>
+            <div>
+              <h3>Action</h3>
+              <p>Does the work — browsing, writing code, calling APIs, sending email, driving other software.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-db"/></svg>
+            <div>
+              <h3>Memory</h3>
+              <p>Holds short-term context and long-term knowledge so decisions stay coherent across many steps.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW THEY WORK -->
+<section id="how" class="band">
+  <div class="inner">
+    <div class="section-head reveal">
+      <h2>How AI agents work</h2>
+      <p class="sub">A continuous perceive–plan–act loop, with tools and memory carrying the work forward.</p>
+    </div>
+
+    <div class="pipeline reveal">
+      <div class="pipe-step">
+        <span class="pipe-num">Step 1</span>
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-inbox"/></svg>
+        <h4>Input</h4>
+        <p>A goal arrives from a person or an event in the environment.</p>
+      </div>
+      <div class="pipe-step">
+        <span class="pipe-num">Step 2</span>
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-map"/></svg>
+        <h4>Plan</h4>
+        <p>Breaks the goal into sub-tasks and chooses which tools to use.</p>
+      </div>
+      <div class="pipe-step">
+        <span class="pipe-num">Step 3</span>
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-tool"/></svg>
+        <h4>Execute</h4>
+        <p>Calls APIs, writes code, browses the web, changes files.</p>
+      </div>
+      <div class="pipe-step">
+        <span class="pipe-num">Step 4</span>
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-search"/></svg>
+        <h4>Observe</h4>
+        <p>Reads back the result and checks it against the goal.</p>
+      </div>
+      <div class="pipe-step">
+        <span class="pipe-num">Step 5</span>
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-check"/></svg>
+        <h4>Respond</h4>
+        <p>Returns the result, or loops again if the work is not done.</p>
+      </div>
+    </div>
+
+    <div class="diagram-wrap reveal">
+      <canvas id="networkCanvas" aria-hidden="true"></canvas>
+      <p class="diagram-cap">A simulated multi-agent network passing messages between specialised roles.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TYPES -->
+<section id="types">
+  <div class="inner">
+    <div class="section-head reveal">
+      <h2>Types of AI agents</h2>
+      <p class="sub">From simple reactive systems to self-learning networks, each suited to a different kind of task.</p>
+    </div>
+
+    <div class="types-grid">
+      <article class="type-card reveal" style="--kind:var(--gold)">
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-bolt"/></svg>
+        <h3>Simple reflex agents</h3>
+        <p>React directly to what they sense using if-then rules, with no memory of past states. Fast and predictable — a thermostat or a spam filter.</p>
+        <span class="type-tag">Rule-based</span>
+      </article>
+
+      <article class="type-card reveal" style="--kind:var(--indigo)">
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-layers"/></svg>
+        <h3>Model-based agents</h3>
+        <p>Keep an internal model of the world so they can act in environments they cannot fully see. Common in robotics and navigation.</p>
+        <span class="type-tag">State-aware</span>
+      </article>
+
+      <article class="type-card reveal" style="--kind:var(--verdigris)">
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-target"/></svg>
+        <h3>Goal-based agents</h3>
+        <p>Reason about which actions lead to a desired outcome and plan a sequence of steps. Found in game-playing AI and route planners.</p>
+        <span class="type-tag">Planning</span>
+      </article>
+
+      <article class="type-card reveal" style="--kind:var(--clay)">
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-trend"/></svg>
+        <h3>Utility-based agents</h3>
+        <p>Choose the action that maximises a utility function, balancing objectives that compete. Behind recommendation engines and trading systems.</p>
+        <span class="type-tag">Optimising</span>
+      </article>
+
+      <article class="type-card reveal" style="--kind:var(--rubric)">
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-book"/></svg>
+        <h3>Learning agents</h3>
+        <p>Improve from experience through reinforcement or supervised learning, adapting to new environments without being reprogrammed.</p>
+        <span class="type-tag">Adaptive</span>
+      </article>
+
+      <article class="type-card reveal" style="--kind:var(--bone)">
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-network"/></svg>
+        <h3>Multi-agent systems</h3>
+        <p>Networks of agents that collaborate or compete on problems too large for one. Used in supply-chain AI and autonomous vehicle fleets.</p>
+        <span class="type-tag">Collaborative</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- EVERYDAY & WORK -->
+<section id="everyday" class="band">
+  <div class="inner">
+    <div class="section-head reveal">
+      <h2>Where you already meet them</h2>
+      <p class="sub">From your morning alarm to enterprise automation, agents are already part of daily life.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="tab-nav" role="tablist" aria-label="Contexts">
+        <button class="tab-btn" role="tab" id="tab-home" aria-controls="panel-home" aria-selected="true">
+          <svg class="ico" aria-hidden="true"><use href="#i-home"/></svg> Everyday life
+        </button>
+        <button class="tab-btn" role="tab" id="tab-work" aria-controls="panel-work" aria-selected="false" tabindex="-1">
+          <svg class="ico" aria-hidden="true"><use href="#i-case"/></svg> In the workplace
+        </button>
+      </div>
+
+      <div class="tab-panel" id="panel-home" role="tabpanel" aria-labelledby="tab-home" tabindex="0">
+        <div class="use-list">
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-mic"/></svg>
+            <div><h4>Voice assistants</h4><p>Siri, Google Assistant and Alexa understand spoken commands, manage calendars, control smart-home devices and answer questions without manual input.</p></div>
+          </div>
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-play"/></svg>
+            <div><h4>Recommendation engines</h4><p>Netflix, Spotify and YouTube run agent-style systems that learn your preferences and curate a personalised feed on their own.</p></div>
+          </div>
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-cart"/></svg>
+            <div><h4>Shopping agents</h4><p>Price trackers, product suggestions and checkout assistants that remember what you like and watch for a better deal.</p></div>
+          </div>
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-nav"/></svg>
+            <div><h4>Navigation and autonomous vehicles</h4><p>Route planners that re-route in real time, and self-driving systems that perceive the road and decide in milliseconds.</p></div>
+          </div>
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-mail"/></svg>
+            <div><h4>Email filtering</h4><p>Smart compose, spam detection and priority inboxes learn from your behaviour to surface what actually matters.</p></div>
+          </div>
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-pulse"/></svg>
+            <div><h4>Personal health agents</h4><p>Wearables and health apps that track vitals, flag anomalies, prompt you to move, and escalate alerts when something looks wrong.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="panel-work" role="tabpanel" aria-labelledby="tab-work" tabindex="0" hidden>
+        <div class="use-list">
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-chat"/></svg>
+            <div><h4>Customer service</h4><p>Agents handle first-line support, route tickets, resolve common questions and escalate the hard cases, cutting response times to seconds.</p></div>
+          </div>
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-chart"/></svg>
+            <div><h4>Analysis and reporting</h4><p>Query databases, build dashboards, surface anomalies and write the summary — a whole analytics workflow, automated.</p></div>
+          </div>
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-code"/></svg>
+            <div><h4>Coding assistants</h4><p>Tools like GitHub Copilot and Cursor work as pair programmers, writing, reviewing and debugging code from a developer's intent.</p></div>
+          </div>
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-doc"/></svg>
+            <div><h4>Document processing</h4><p>Extract, classify and summarise contracts, invoices and reports — back-office work at a scale people cannot match.</p></div>
+          </div>
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-box"/></svg>
+            <div><h4>Supply chain</h4><p>Multi-agent systems that coordinate inventory, logistics and suppliers, adapting in real time when something breaks.</p></div>
+          </div>
+          <div class="use-item">
+            <svg class="ico ico-lg" aria-hidden="true"><use href="#i-shield"/></svg>
+            <div><h4>Cybersecurity</h4><p>Monitor networks continuously, detect threats, isolate breaches and start countermeasures faster than any human team.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMPLES -->
+<section id="examples">
+  <div class="inner">
+    <div class="section-head reveal">
+      <h2>Agents in production</h2>
+      <p class="sub">How leading organisations put agents to work outside the lab.</p>
+    </div>
+
+    <div class="examples">
+      <article class="example-card reveal" style="--kind:var(--gold)">
+        <div class="ex-head">
+          <span class="ex-icon"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg></span>
+          <div><h3>OpenAI Operator</h3><p class="ex-sector">Web automation · OpenAI</p></div>
+        </div>
+        <p class="ex-body">A computer-use agent that browses, fills forms, books travel and finishes online tasks on its own — general-purpose web agency at consumer scale.</p>
+        <div class="ex-tags"><span class="ex-tag">Computer use</span><span class="ex-tag">Autonomous</span></div>
+      </article>
+
+      <article class="example-card reveal" style="--kind:var(--verdigris)">
+        <div class="ex-head">
+          <span class="ex-icon"><svg class="ico" aria-hidden="true"><use href="#i-flask"/></svg></span>
+          <div><h3>AlphaFold and Med-Gemini</h3><p class="ex-sector">Healthcare · Google DeepMind</p></div>
+        </div>
+        <p class="ex-body">AlphaFold predicts protein structures and speeds up drug discovery. Med-Gemini works as a clinical reasoning agent on complex medical questions.</p>
+        <div class="ex-tags"><span class="ex-tag">Biomedical</span><span class="ex-tag">Clinical AI</span></div>
+      </article>
+
+      <article class="example-card reveal" style="--kind:var(--indigo)">
+        <div class="ex-head">
+          <span class="ex-icon"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg></span>
+          <div><h3>Palantir AIP</h3><p class="ex-sector">Enterprise · Palantir</p></div>
+        </div>
+        <p class="ex-body">Runs agents across defence and commercial operations — orchestrating data pipelines, generating reports and supporting decisions at machine speed.</p>
+        <div class="ex-tags"><span class="ex-tag">Analytics</span><span class="ex-tag">Orchestration</span></div>
+      </article>
+
+      <article class="example-card reveal" style="--kind:var(--clay)">
+        <div class="ex-head">
+          <span class="ex-icon"><svg class="ico" aria-hidden="true"><use href="#i-nav"/></svg></span>
+          <div><h3>Tesla Full Self-Driving</h3><p class="ex-sector">Automotive · Tesla</p></div>
+        </div>
+        <p class="ex-body">A real-time sensor stack that perceives the road, plans a route and controls the car, learning from edge cases collected across the fleet.</p>
+        <div class="ex-tags"><span class="ex-tag">Robotics</span><span class="ex-tag">Computer vision</span></div>
+      </article>
+
+      <article class="example-card reveal" style="--kind:var(--rubric)">
+        <div class="ex-head">
+          <span class="ex-icon"><svg class="ico" aria-hidden="true"><use href="#i-code"/></svg></span>
+          <div><h3>GitHub Copilot Workspace</h3><p class="ex-sector">Developer tools · GitHub</p></div>
+        </div>
+        <p class="ex-body">Reads an issue, plans the implementation, writes code across files, runs the tests and opens a pull request — end to end.</p>
+        <div class="ex-tags"><span class="ex-tag">Code generation</span><span class="ex-tag">Agentic IDE</span></div>
+      </article>
+
+      <article class="example-card reveal" style="--kind:var(--bone)">
+        <div class="ex-head">
+          <span class="ex-icon"><svg class="ico" aria-hidden="true"><use href="#i-box"/></svg></span>
+          <div><h3>Amazon Robotics</h3><p class="ex-sector">Logistics · Amazon</p></div>
+        </div>
+        <p class="ex-body">Hundreds of thousands of robots in fulfilment centres act as coordinated agents, picking, sorting and routing packages through one orchestration layer.</p>
+        <div class="ex-tags"><span class="ex-tag">Multi-agent</span><span class="ex-tag">Logistics</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section id="history" class="band">
+  <div class="inner">
+    <div class="section-head reveal">
+      <h2>How we got here</h2>
+      <p class="sub">From rule-based scripts to large reasoning models, in seven steps.</p>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="tl-item"><div class="tl-year">1950</div><h4>The Turing test</h4><p>Alan Turing proposes a benchmark for machine intelligence, laying the conceptual ground for agents.</p></div>
+      <div class="tl-item"><div class="tl-year">1966</div><h4>ELIZA</h4><p>Joseph Weizenbaum builds the first conversational agent at MIT — pattern matching that foreshadowed today's assistants.</p></div>
+      <div class="tl-item"><div class="tl-year">1997</div><h4>Deep Blue</h4><p>IBM's goal-based chess agent beats Garry Kasparov, showing AI could outperform people in a constrained domain.</p></div>
+      <div class="tl-item"><div class="tl-year">2011</div><h4>Watson and Siri</h4><p>Watson wins Jeopardy! and Apple ships Siri, putting agents into everyday consumer devices at scale.</p></div>
+      <div class="tl-item"><div class="tl-year">2016</div><h4>AlphaGo</h4><p>DeepMind's reinforcement-learning agent beats the world Go champion, demonstrating superhuman strategic play.</p></div>
+      <div class="tl-item"><div class="tl-year">2022</div><h4>ChatGPT and the LLM era</h4><p>Large language models become the reasoning engine for a new generation of agents.</p></div>
+      <div class="tl-item"><div class="tl-year">2024–2026</div><h4>Agents go mainstream</h4><p>Claude, GPT and Gemini power autonomous systems that browse, code, plan and collaborate inside real workflows.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="inner">
+    <div class="section-head reveal">
+      <h2>By the numbers</h2>
+      <p class="sub">Figures behind the fastest-growing category in software. Check the source before citing.</p>
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat">
+        <p class="num"><span class="counter" data-target="47">0</span>%</p>
+        <p class="lbl">of enterprises deploying AI agents <span class="src">Gartner estimate</span></p>
+      </div>
+      <div class="stat">
+        <p class="num">$<span class="counter" data-target="1.8">0</span>T</p>
+        <p class="lbl">projected AI market size by 2030 <span class="src">Goldman Sachs</span></p>
+      </div>
+      <div class="stat">
+        <p class="num"><span class="counter" data-target="750">0</span>K+</p>
+        <p class="lbl">Amazon robots in operation <span class="src">Amazon</span></p>
+      </div>
+      <div class="stat">
+        <p class="num"><span class="counter" data-target="300">0</span>M+</p>
+        <p class="lbl">ChatGPT weekly active users <span class="src">OpenAI, 2025</span></p>
+      </div>
+      <div class="stat">
+        <p class="num"><span class="counter" data-target="70">0</span>%</p>
+        <p class="lbl">of developers using AI coding tools <span class="src">GitHub survey, 2025</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news" class="band">
+  <div class="inner">
+    <div class="section-head reveal">
+      <h2>Latest developments</h2>
+      <p class="sub">Highlights from the frontier of agent research and deployment.</p>
+    </div>
+
+    <div class="news-grid">
+      <article class="news-card is-lead reveal">
+        <div class="news-meta"><span class="news-badge">Lead story</span><span class="news-date">June 2026</span></div>
+        <h3>Anthropic releases the Claude Agent SDK for multi-agent pipelines</h3>
+        <p>Developers can orchestrate fleets of specialised agents that collaborate on long-horizon tasks, from software engineering to research.</p>
+        <a class="news-link" href="https://docs.anthropic.com" target="_blank" rel="noopener">Read more <svg class="ico" style="width:15px;height:15px" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+
+      <article class="news-card reveal">
+        <div class="news-meta"><span class="news-badge">Research</span><span class="news-date">May 2026</span></div>
+        <h3>Gemini agents reach expert level on medical benchmarks</h3>
+        <p>Med-Gemini performs at specialist level on clinical reasoning tasks, a milestone for AI-assisted diagnosis.</p>
+        <a class="news-link" href="#">Read more <svg class="ico" style="width:15px;height:15px" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+
+      <article class="news-card reveal">
+        <div class="news-meta"><span class="news-badge">Industry</span><span class="news-date">May 2026</span></div>
+        <h3>Copilot Studio now powers 200,000+ enterprise agents</h3>
+        <p>Microsoft reports enterprise adoption of autonomous agents has doubled year on year, covering HR, finance and legal workflows.</p>
+        <a class="news-link" href="#">Read more <svg class="ico" style="width:15px;height:15px" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+
+      <article class="news-card reveal">
+        <div class="news-meta"><span class="news-badge">Policy</span><span class="news-date">April 2026</span></div>
+        <h3>EU AI Act transparency rules for agents take effect</h3>
+        <p>Businesses must now disclose when an autonomous agent handles a customer interaction, with accountability requirements for high-risk uses.</p>
+        <a class="news-link" href="#">Read more <svg class="ico" style="width:15px;height:15px" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+
+      <article class="news-card reveal">
+        <div class="news-meta"><span class="news-badge">Research</span><span class="news-date">April 2026</span></div>
+        <h3>Stanford AI Index tracks agent use in knowledge work</h3>
+        <p>The annual index reports a sharp rise in the share of cognitive tasks handled by autonomous agents across surveyed enterprises.</p>
+        <a class="news-link" href="#">Read more <svg class="ico" style="width:15px;height:15px" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+
+      <article class="news-card reveal">
+        <div class="news-meta"><span class="news-badge">Open source</span><span class="news-date">March 2026</span></div>
+        <h3>Open-source agent frameworks converge on a shared toolkit</h3>
+        <p>Building, deploying and monitoring multi-agent systems is consolidating around a smaller set of well-supported libraries.</p>
+        <a class="news-link" href="#">Read more <svg class="ico" style="width:15px;height:15px" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section>
+  <div class="inner">
+    <div class="closing reveal">
+      <h2>Start building with agents</h2>
+      <p>The agentic era is here. Explore the frameworks, tutorials and tools behind these systems.</p>
+      <div class="btn-group">
+        <a class="btn btn-p" href="https://docs.anthropic.com" target="_blank" rel="noopener">Anthropic documentation</a>
+        <a class="btn btn-o" href="index.html">Back to ZEMEN</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="inner footer-inner">
+    <span>© <span id="year">2026</span> ZEMEN <span lang="am">ዘመን</span>. Educational content, updated by hand.</span>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="ai-world.html">AI World</a>
+      <a href="girum-portfolio.html">Portfolio</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Mobile menu ── */
+  var btn = document.getElementById('menu-btn');
+  var nav = document.getElementById('nav');
+  function setOpen(open) {
+    nav.dataset.open = open ? 'true' : 'false';
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function () {
+    setOpen(btn.getAttribute('aria-expanded') !== 'true');
+  });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A') setOpen(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { setOpen(false); btn.focus(); }
+  });
+  window.addEventListener('resize', function () { if (window.innerWidth > 720) setOpen(false); });
+
+  /* ── Tabs (arrow-key navigable) ── */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function selectTab(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { selectTab(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var next = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : -1;
+      if (next < 0 || next >= tabs.length) return;
+      e.preventDefault();
+      tabs[next].focus();
+      selectTab(tabs[next]);
+    });
+  });
+
+  /* ── Scroll reveal ── */
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  /* ── Counters ── */
+  var statsSection = document.getElementById('stats');
+  var started = false;
+  new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting || started) return;
+    started = true;
+    document.querySelectorAll('.counter').forEach(function (el) {
+      var target = parseFloat(el.dataset.target);
+      var isFloat = String(target).indexOf('.') > -1;
+      if (reduced) {
+        el.textContent = isFloat ? target.toFixed(1) : target.toLocaleString();
+        return;
+      }
+      var start = performance.now(), dur = 1600;
+      (function step(now) {
+        var p = Math.min((now - start) / dur, 1);
+        var v = target * (1 - Math.pow(1 - p, 3));
+        el.textContent = isFloat ? v.toFixed(1) : Math.round(v).toLocaleString();
+        if (p < 1) requestAnimationFrame(step);
+      })(performance.now());
+    });
+  }, { threshold: 0.3 }).observe(statsSection);
+
+  /* ── Canvas helper: DPR-aware sizing + pause when off-screen ── */
+  function makeCanvas(canvas, setup) {
+    var ctx = canvas.getContext('2d');
+    var w = 0, h = 0, raf = null, scene = null;
+
+    function fit() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = canvas.getBoundingClientRect();
+      if (!r.width || !r.height) return false;
+      w = r.width; h = r.height;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return true;
+    }
+
+    function loop() {
+      scene.draw(ctx, w, h);
+      raf = requestAnimationFrame(loop);
+    }
+    function play() { if (!raf && !reduced) raf = requestAnimationFrame(loop); }
+    function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+    if (!fit()) return;
+    scene = setup(w, h);
+    if (reduced) { scene.draw(ctx, w, h); return; }
+
+    new IntersectionObserver(function (e) { e[0].isIntersecting ? play() : stop(); }).observe(canvas);
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : play(); });
+
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(function () { if (fit()) scene = setup(w, h); }, 180);
+    });
+  }
+
+  /* ── Hero: drifting node field ── */
+  var hero = document.getElementById('nodeCanvas');
+  if (hero) makeCanvas(hero, function (w, h) {
+    var count = Math.min(46, Math.round(w / 26));
+    var nodes = [];
+    for (var i = 0; i < count; i++) {
+      nodes.push({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.8 + 0.8
+      });
+    }
+    return {
+      draw: function (ctx, w, h) {
+        ctx.clearRect(0, 0, w, h);
+        for (var i = 0; i < nodes.length; i++) {
+          for (var j = i + 1; j < nodes.length; j++) {
+            var dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+            var d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 140) {
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.strokeStyle = 'rgba(226,184,114,' + (0.13 * (1 - d / 140)).toFixed(3) + ')';
+              ctx.lineWidth = 0.7;
+              ctx.stroke();
+            }
+          }
+        }
+        nodes.forEach(function (n) {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(226,184,114,0.5)';
+          ctx.fill();
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+          if (n.y < 0 || n.y > h) n.vy *= -1;
+        });
+      }
+    };
+  });
+
+  /* ── Multi-agent message network ── */
+  var net = document.getElementById('networkCanvas');
+  if (net) makeCanvas(net, function (w, h) {
+    var names = ['Orchestrator', 'Planner', 'Researcher', 'Coder', 'Reviewer', 'Memory'];
+    var hues = ['#E2B872', '#7E8FC0', '#74A08C', '#C77B52', '#C6503C', '#CFC7B8'];
+    var cx = w / 2, cy = h / 2, r = Math.min(w, h) * 0.34;
+    var agents = names.map(function (name, i) {
+      var a = (i / names.length) * Math.PI * 2 - Math.PI / 2;
+      return { name: name, x: cx + r * Math.cos(a), y: cy + r * Math.sin(a), color: hues[i] };
+    });
+    var packets = [], tick = 0;
+
+    return {
+      draw: function (ctx, w, h) {
+        ctx.clearRect(0, 0, w, h);
+
+        if (++tick % 38 === 0 && packets.length < 14) {
+          var from = Math.floor(Math.random() * agents.length);
+          var to = (from + 1 + Math.floor(Math.random() * (agents.length - 1))) % agents.length;
+          packets.push({ from: from, to: to, t: 0, speed: 0.008 + Math.random() * 0.008 });
+        }
+
+        agents.forEach(function (a, i) {
+          agents.forEach(function (b, j) {
+            if (j <= i) return;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = 'rgba(226,184,114,0.07)';
+            ctx.lineWidth = 1; ctx.stroke();
+          });
+        });
+
+        packets = packets.filter(function (p) { return p.t <= 1; });
+        packets.forEach(function (p) {
+          var a = agents[p.from], b = agents[p.to];
+          ctx.beginPath();
+          ctx.arc(a.x + (b.x - a.x) * p.t, a.y + (b.y - a.y) * p.t, 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = a.color; ctx.fill();
+          p.t += p.speed;
+        });
+
+        agents.forEach(function (n) {
+          ctx.beginPath(); ctx.arc(n.x, n.y, 21, 0, Math.PI * 2);
+          ctx.fillStyle = '#151A23'; ctx.fill();
+          ctx.strokeStyle = n.color; ctx.lineWidth = 1.2; ctx.stroke();
+          ctx.fillStyle = '#EDE8DF';
+          ctx.font = '500 9px Archivo, sans-serif';
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText(n.name, n.x, n.y);
+        });
+      }
+    };
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+
+</body>
+</html>
