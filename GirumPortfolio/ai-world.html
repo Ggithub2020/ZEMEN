@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The AI World | ZEMEN ዘመን</title>
+<meta name="description" content="An interactive guide to artificial intelligence: what it is, where it came from, who is building it, and where it may go next.">
+<meta name="theme-color" content="#0D1017">
+<meta name="color-scheme" content="dark light">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="The AI World | ZEMEN ዘመን">
+<meta property="og:description" content="What artificial intelligence is, who builds it, and what is genuinely unsettled about where it goes.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230D1017'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='%23E2B872' font-family='serif'%3E%E1%8B%98%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Noto+Serif+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE AI WORLD — ZEMEN ዘመን
+   Ground: ink.  Illumination: gold.  Rubric: red, used sparingly.
+   Display: Fraunces  |  Body: Archivo
+   ============================================================ */
+:root{
+  --gold:#E2B872;
+  --gold-deep:#B98A3F;
+  --on-gold:#181206;
+  --rubric:#C6503C;
+  --verdigris:#74A08C;
+  --indigo:#7E8FC0;
+  --clay:#C77B52;
+  --bone:#CFC7B8;
+
+  /* legacy accent names, remapped so older rules keep working */
+  --blue:var(--gold-deep);
+  --violet:var(--indigo);
+  --cyan:var(--gold);
+  --amber:var(--clay);
+  --rose:var(--rubric);
+
+  --ink:#0D1017;
+  --surface:#151A23;
+  --surface-2:#10141B;
+  --raise:rgba(237,232,223,.035);
+  --line:rgba(237,232,223,.12);
+  --line-strong:rgba(237,232,223,.24);
+  --text:#EDE8DF;
+  --muted:#9C9A94;
+  --dim:#6F6E6A;
+  --glass:rgba(13,16,23,.84);
+  --grid-dot:rgba(226,184,114,.09);
+  --shadow:0 20px 60px -30px rgba(0,0,0,.9);
+  --r-sm:8px; --r:12px; --r-lg:16px;
+  --maxw:1220px;
+  --step:clamp(3.5rem,7vw,7rem);
+  --ease:cubic-bezier(.22,.61,.36,1);
+
+  --sans:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:"Fraunces",ui-serif,Georgia,"Times New Roman",serif;
+  --ethiopic:"Noto Serif Ethiopic","Nyala","Abyssinica SIL",var(--serif);
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+html[data-theme="light"]{
+  --gold:#9A6E24;
+  --gold-deep:#7A5518;
+  --on-gold:#FFFDF8;
+  --rubric:#A63A27;
+  --verdigris:#46705D;
+  --indigo:#46578A;
+  --clay:#92512B;
+  --bone:#6E6555;
+
+  --ink:#F4F0E8;
+  --surface:#FBF8F2;
+  --surface-2:#EDE7DC;
+  --raise:rgba(26,29,34,.03);
+  --line:rgba(26,29,34,.14);
+  --line-strong:rgba(26,29,34,.26);
+  --text:#1A1D22;
+  --muted:#56585E;
+  --dim:#7C7E84;
+  --glass:rgba(244,240,232,.86);
+  --grid-dot:rgba(122,85,24,.10);
+  --shadow:0 18px 44px -28px rgba(60,45,20,.35);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--ink);color:var(--text);
+  font-family:var(--sans);
+  font-size:17px;line-height:1.65;font-weight:400;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+img{max-width:100%;display:block}
+button,input,select{font:inherit;color:inherit}
+a{color:inherit}
+h1,h2,h3,h4,.display{font-family:var(--serif);font-variation-settings:"opsz" 90;
+  font-weight:600;letter-spacing:-.025em;line-height:1.08;margin:0}
+.mono{font-family:var(--mono);font-size:.76rem;letter-spacing:.04em}
+p{margin:0 0 1em}
+.wrap{width:min(100% - 2.6rem,var(--maxw));margin-inline:auto}
+.narrow{max-width:70ch}
+section{padding-block:var(--step);position:relative}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+::selection{background:var(--gold);color:var(--on-gold)}
+
+.skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--gold);color:var(--on-gold);
+  padding:.7rem 1.1rem;border-radius:0 0 var(--r-sm) 0;font-weight:600}
+.skip:focus{left:0}
+
+/* ---------- background field ---------- */
+.field{position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background-image:radial-gradient(circle at 1px 1px,var(--grid-dot) 1px,transparent 0);
+  background-size:34px 34px;
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 100%);
+}
+.aurora{position:fixed;inset:-20% -10% auto -10%;height:70vh;z-index:-3;pointer-events:none;opacity:.55;
+  background:
+    radial-gradient(45% 55% at 16% 18%,color-mix(in oklab,var(--gold) 26%,transparent),transparent 70%),
+    radial-gradient(40% 50% at 82% 10%,color-mix(in oklab,var(--rubric) 18%,transparent),transparent 70%);
+  filter:blur(40px);
+}
+html[data-theme="light"] .aurora{opacity:.3}
+
+/* ---------- navigation ---------- */
+.nav{position:sticky;top:0;z-index:90;backdrop-filter:blur(16px) saturate(150%);
+  background:var(--glass);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.stuck{border-bottom-color:var(--line)}
+.nav-in{display:flex;align-items:center;gap:1rem;height:70px}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;flex:0 0 auto;margin-right:.5rem}
+.brand .glyph{width:36px;height:36px;flex:0 0 auto;display:grid;place-items:center;border-radius:10px;
+  border:1px solid color-mix(in oklab,var(--gold) 45%,transparent);
+  background:color-mix(in oklab,var(--gold) 10%,transparent);
+  color:var(--gold);font-family:var(--ethiopic);font-size:1.15rem;line-height:1;padding-bottom:2px}
+.brand b{font-family:var(--sans);font-weight:600;font-size:.98rem;letter-spacing:.01em;white-space:nowrap}
+.brand .amh{font-family:var(--ethiopic);font-weight:700}
+.nav-links{display:flex;gap:.1rem;overflow:auto;scrollbar-width:none;flex:1 1 auto}
+.nav-links::-webkit-scrollbar{display:none}
+@media(min-width:941px){.nav-links{mask-image:linear-gradient(90deg,#000 93%,transparent)}}
+.nav-links a{padding:.45rem .62rem;border-radius:6px;text-decoration:none;color:var(--muted);
+  font-size:.87rem;white-space:nowrap;transition:color .2s,background .2s}
+.nav-links a:hover{color:var(--text);background:var(--raise)}
+.nav-links a[aria-current="true"]{color:var(--text);box-shadow:inset 0 -1px 0 var(--gold)}
+.nav-links a.site{color:var(--gold)}
+.nav-tools{display:flex;gap:.4rem;align-items:center;flex:0 0 auto}
+.icon-btn{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--line);
+  background:transparent;cursor:pointer;color:var(--text);transition:border-color .2s,background .2s}
+.icon-btn:hover{border-color:color-mix(in oklab,var(--gold) 50%,transparent);background:var(--raise)}
+.icon-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.burger{display:none}
+@media(max-width:940px){
+  .nav-links{position:fixed;inset:70px 0 auto 0;flex-direction:column;background:var(--glass);
+    backdrop-filter:blur(20px);border-bottom:1px solid var(--line);padding:.7rem 1.3rem 1.2rem;
+    max-height:calc(100dvh - 70px);display:none;overflow:auto}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:.75rem .5rem;font-size:1rem;border-bottom:1px solid var(--line);border-radius:0}
+  .burger{display:grid}
+}
+@media(max-width:400px){.brand b{font-size:.9rem}}
+
+/* ---------- search overlay ---------- */
+.search-shade{position:fixed;inset:0;z-index:120;background:rgba(5,7,11,.66);backdrop-filter:blur(6px);
+  display:none;padding:8vh 1.2rem}
+html[data-theme="light"] .search-shade{background:rgba(60,50,30,.3)}
+.search-shade.open{display:block}
+.search-panel{width:min(720px,100%);margin-inline:auto;background:var(--surface);border:1px solid var(--line-strong);
+  border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.search-head{display:flex;align-items:center;gap:.8rem;padding:1rem 1.2rem;border-bottom:1px solid var(--line)}
+.search-head input{flex:1;background:none;border:0;font-size:1.1rem;font-family:var(--serif);
+  font-variation-settings:"opsz" 60}
+.search-head input:focus{outline:none}
+.search-head input::-webkit-search-cancel-button{display:none}
+.search-results{max-height:56vh;overflow:auto;padding:.5rem}
+.sr-item{width:100%;text-align:left;background:none;border:0;padding:.75rem .9rem;border-radius:var(--r-sm);
+  cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:.4rem;align-items:center;color:inherit}
+.sr-item:hover,.sr-item.active{background:var(--raise)}
+.sr-item strong{font-family:var(--serif);font-weight:600;font-size:.98rem}
+.sr-item small{display:block;color:var(--muted);font-size:.82rem;margin-top:.1rem}
+.sr-kind{font-size:.68rem;letter-spacing:.04em;color:var(--dim);border:1px solid var(--line);
+  padding:.16rem .5rem;border-radius:99px}
+.sr-empty{padding:2rem 1rem;text-align:center;color:var(--muted)}
+.search-foot{padding:.6rem 1.2rem;border-top:1px solid var(--line);color:var(--dim);font-size:.78rem;
+  display:flex;justify-content:space-between;gap:1rem;align-items:center;background:var(--surface)}
+.search-foot span:last-child{white-space:nowrap}
+@media(max-width:640px){.search-foot span:first-child{display:none}}
+kbd{font-family:var(--mono);font-size:.72rem;border:1px solid var(--line);border-radius:5px;padding:.05rem .35rem}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(2.5rem,6vw,5rem);padding-bottom:clamp(3rem,6vw,5.5rem);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(1.6rem,4vw,3.4rem);align-items:center}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{font-family:var(--serif);font-variation-settings:"opsz" 144,"SOFT" 0,"WONK" 0;
+  font-size:clamp(2.6rem,8vw,6rem);font-weight:900;letter-spacing:-.05em;line-height:.9;color:var(--text)}
+.hero h1 .l{display:inline-block;opacity:0;transform:translateY(.5em);animation:rise .7s var(--ease) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.hero .sub{font-family:var(--serif);font-variation-settings:"opsz" 60;font-weight:600;
+  font-size:clamp(1.1rem,2.1vw,1.45rem);color:var(--text);max-width:34ch;margin-top:1.2rem;
+  line-height:1.35;letter-spacing:-.02em}
+.hero .lede{color:var(--muted);max-width:52ch;margin-top:1.1rem;font-size:1rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.55rem;font-size:.85rem;color:var(--muted);margin-bottom:1.3rem}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--rubric);
+  box-shadow:0 0 0 4px color-mix(in oklab,var(--rubric) 18%,transparent)}
+.cta-row{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.9rem 1.5rem;
+  border-radius:var(--r);text-decoration:none;font-weight:600;font-size:.92rem;cursor:pointer;
+  border:1px solid var(--line);transition:background .2s,border-color .2s}
+.btn-primary{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+.btn-primary:hover{background:color-mix(in oklab,var(--gold) 82%,#fff);border-color:color-mix(in oklab,var(--gold) 82%,#fff)}
+.btn-ghost:hover{border-color:color-mix(in oklab,var(--gold) 50%,transparent);background:var(--raise)}
+.hero-canvas-wrap{position:relative;aspect-ratio:1/.86;border-radius:var(--r-lg);overflow:hidden;
+  border:1px solid var(--line);background:var(--surface)}
+#neural{width:100%;height:100%;display:block}
+.canvas-tag{position:absolute;left:14px;bottom:12px;color:var(--dim);font-size:.72rem}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin-top:clamp(2.4rem,5vw,3.6rem);
+  background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+@media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:440px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--ink);padding:1.3rem 1.2rem}
+.stat .num{font-family:var(--serif);font-variation-settings:"opsz" 144;
+  font-size:clamp(1.7rem,3vw,2.3rem);font-weight:900;letter-spacing:-.04em;color:var(--gold);line-height:1}
+.stat .lab{color:var(--muted);font-size:.86rem;margin-top:.35rem}
+.stat .note{color:var(--dim);font-size:.72rem;margin-top:.5rem;font-family:var(--mono)}
+
+/* ---------- section chrome ---------- */
+.sec-head{display:grid;gap:.9rem;margin-bottom:clamp(2rem,4vw,3rem);max-width:78ch}
+.sec-head h2{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.035em}
+.sec-head p{color:var(--muted);font-size:1.02rem;max-width:66ch;margin:0}
+.sec-index{font-size:.78rem;letter-spacing:.04em;color:var(--gold-deep);font-weight:600;
+  display:flex;align-items:center;gap:.7rem}
+.sec-index::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--line-strong),transparent)}
+.rule{height:1px;background:linear-gradient(90deg,var(--line-strong),transparent)}
+
+/* generic card */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1.3rem;
+  transition:border-color .25s,background .25s}
+.card:hover{border-color:var(--line-strong)}
+.grid{display:grid;gap:1rem}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:960px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.g4,.g3,.g2{grid-template-columns:1fr}}
+
+/* tags / chips */
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.6rem}
+.chip{padding:.45rem .9rem;border-radius:99px;border:1px solid var(--line);background:transparent;
+  color:var(--muted);font-size:.84rem;font-weight:500;cursor:pointer;transition:.2s}
+.chip:hover{color:var(--text);border-color:color-mix(in oklab,var(--gold) 45%,transparent)}
+.chip[aria-pressed="true"]{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.tag{font-size:.7rem;font-weight:500;letter-spacing:.03em;padding:.2rem .55rem;
+  border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.fact{color:var(--verdigris);border-color:color-mix(in oklab,var(--verdigris) 45%,transparent)}
+.tag.analysis{color:var(--indigo);border-color:color-mix(in oklab,var(--indigo) 45%,transparent)}
+.tag.estimate{color:var(--gold);border-color:color-mix(in oklab,var(--gold) 45%,transparent)}
+.tag.forecast{color:var(--rubric);border-color:color-mix(in oklab,var(--rubric) 45%,transparent)}
+
+/* callout */
+.note-box{border:1px solid var(--line);border-left:3px solid var(--gold-deep);border-radius:6px;
+  padding:1rem 1.15rem;color:var(--muted);font-size:.9rem;display:flex;gap:.75rem;align-items:flex-start;
+  background:var(--surface)}
+.note-box svg{width:17px;height:17px;flex:0 0 auto;margin-top:.22rem;stroke:var(--gold);fill:none;stroke-width:1.7}
+.note-box strong{color:var(--text)}
+
+/* ---------- concepts ---------- */
+.concept{cursor:pointer;text-align:left;width:100%;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:1.2rem;display:grid;gap:.4rem;transition:.25s var(--ease);color:inherit}
+.concept:hover{border-color:var(--line-strong)}
+.concept[aria-expanded="true"]{border-color:color-mix(in oklab,var(--gold) 55%,transparent)}
+.concept h3{font-size:1.08rem;display:flex;justify-content:space-between;align-items:center;gap:.6rem}
+.concept .one{color:var(--muted);font-size:.9rem}
+.concept .more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.concept[aria-expanded="true"] .more{grid-template-rows:1fr}
+.concept .more>div{overflow:hidden}
+.concept .more p{font-size:.92rem;color:var(--muted);margin:.7rem 0 0;padding-top:.7rem;border-top:1px solid var(--line)}
+.concept .ex{margin-top:.55rem;color:var(--dim);font-size:.84rem}
+.plus{width:20px;height:20px;flex:0 0 auto;position:relative;opacity:.6;color:var(--gold)}
+.plus::before,.plus::after{content:"";position:absolute;background:currentColor;border-radius:2px;transition:transform .3s var(--ease)}
+.plus::before{inset:9px 2px auto;height:2px}
+.plus::after{inset:2px 9px auto;width:2px;height:16px}
+.concept[aria-expanded="true"] .plus::after,.layer[aria-expanded="true"] .plus::after{transform:rotate(90deg)}
+
+/* hierarchy */
+.hier{display:flex;flex-wrap:wrap;gap:.5rem;align-items:stretch;margin-top:2rem}
+.hier-step{flex:1 1 150px;border:1px solid var(--line);border-radius:var(--r);padding:.9rem 1rem;
+  background:var(--surface);position:relative;overflow:hidden}
+.hier-step::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--c)}
+.hier-step b{font-family:var(--serif);font-weight:600;display:block;font-size:1rem;letter-spacing:-.02em}
+.hier-step span{color:var(--muted);font-size:.82rem}
+
+/* ---------- convergence ---------- */
+.converge{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:820px){.converge{grid-template-columns:1fr}}
+.force{border:1px solid var(--line);border-radius:var(--r);padding:1.2rem;background:var(--surface)}
+.force .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--c)}
+.force h3{font-size:1.18rem;margin:.35rem 0 .5rem}
+.force p{color:var(--muted);font-size:.9rem;margin:0}
+.force .meter{height:3px;border-radius:2px;background:var(--line);margin-top:.9rem;overflow:hidden}
+.force .meter i{display:block;height:100%;width:0;background:var(--c);transition:width 1.2s var(--ease)}
+.equals{text-align:center;margin-top:1.6rem;font-family:var(--serif);font-variation-settings:"opsz" 90;
+  font-size:clamp(1.3rem,3.6vw,2rem);font-weight:600;letter-spacing:-.03em;color:var(--gold)}
+
+/* ---------- timeline ---------- */
+.tl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr);gap:2rem;align-items:start}
+@media(max-width:900px){.tl{grid-template-columns:1fr}}
+.tl-rail{position:relative;padding-left:1.7rem;max-height:520px;overflow:auto;scrollbar-width:thin}
+.tl-rail::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.tl-item{position:relative;width:100%;text-align:left;background:none;border:0;cursor:pointer;
+  padding:.6rem .7rem;border-radius:var(--r-sm);display:grid;grid-template-columns:80px 1fr;gap:.7rem;
+  color:var(--muted);transition:.2s}
+.tl-item::before{content:"";position:absolute;left:-1.7rem;top:1.05rem;width:11px;height:11px;border-radius:50%;
+  background:var(--ink);border:2px solid var(--line-strong);transition:.25s}
+.tl-item:hover{background:var(--raise);color:var(--text)}
+.tl-item[aria-selected="true"]{background:var(--raise);color:var(--text)}
+.tl-item[aria-selected="true"]::before{border-color:var(--gold);background:var(--gold);
+  box-shadow:0 0 0 4px color-mix(in oklab,var(--gold) 18%,transparent)}
+.tl-item .y{font-family:var(--mono);font-size:.8rem;color:var(--dim)}
+.tl-item[aria-selected="true"] .y{color:var(--gold)}
+.tl-item .t{font-family:var(--serif);font-size:.98rem;font-weight:600;line-height:1.25;letter-spacing:-.02em}
+.tl-panel{position:sticky;top:92px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);
+  padding:1.6rem;min-height:320px}
+.tl-panel .yr{font-family:var(--serif);font-variation-settings:"opsz" 144;
+  font-size:clamp(2.2rem,5.5vw,3.2rem);font-weight:900;letter-spacing:-.045em;line-height:1;color:var(--gold)}
+.tl-panel h3{font-size:1.35rem;margin:.4rem 0 .9rem}
+.tl-panel dt{font-size:.74rem;letter-spacing:.04em;color:var(--gold-deep);font-weight:600;margin-top:1rem}
+.tl-panel dd{margin:.3rem 0 0;color:var(--muted);font-size:.93rem}
+.fade-swap{animation:swap .4s var(--ease)}
+@keyframes swap{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- model landscape ---------- */
+.mrow{display:grid;grid-template-columns:220px 1fr;gap:1.2rem;padding:1.2rem 0;border-top:1px solid var(--line);align-items:start}
+@media(max-width:760px){.mrow{grid-template-columns:1fr;gap:.6rem}}
+.mrow h3{font-size:1.1rem}
+.mrow .kind{color:var(--dim);font-size:.8rem;margin-top:.25rem}
+.mrow p{color:var(--muted);font-size:.93rem;margin:0 0 .6rem}
+.fam{display:flex;flex-wrap:wrap;gap:.35rem}
+.fam span{font-size:.78rem;border:1px solid var(--line);border-radius:99px;padding:.18rem .6rem;color:var(--muted)}
+
+/* ---------- companies ---------- */
+.co{cursor:pointer;text-align:left;position:relative;overflow:hidden;color:inherit}
+.co-top{display:flex;gap:.8rem;align-items:center;margin-bottom:.9rem}
+.logo{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-family:var(--serif);
+  font-variation-settings:"opsz" 90;font-weight:900;font-size:1rem;flex:0 0 auto;letter-spacing:-.03em;
+  color:var(--c,var(--gold));border:1px solid currentColor;
+  background:color-mix(in oklab,currentColor 10%,transparent)}
+.co h3{font-size:1.08rem}
+.co .hq{color:var(--dim);font-size:.8rem;margin-top:.15rem}
+.co p{color:var(--muted);font-size:.89rem;margin:0 0 .8rem}
+.co .foot{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.co .open{position:absolute;right:1rem;bottom:1rem;color:var(--gold);font-size:.78rem;font-weight:600;
+  opacity:0;transition:.25s}
+.co:hover .open{opacity:1}
+
+/* modal */
+.modal-shade{position:fixed;inset:0;z-index:130;background:rgba(5,7,11,.75);backdrop-filter:blur(8px);
+  display:none;align-items:flex-start;justify-content:center;padding:6vh 1.1rem 2rem;overflow:auto}
+html[data-theme="light"] .modal-shade{background:rgba(60,50,30,.4)}
+.modal-shade.open{display:flex}
+.modal{width:min(760px,100%);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-lg);
+  box-shadow:var(--shadow);animation:swap .35s var(--ease);overflow:hidden}
+.modal-head{padding:1.5rem 1.6rem;border-bottom:1px solid var(--line);display:flex;gap:1rem;align-items:flex-start}
+.modal-head h3{font-size:1.5rem}
+.modal-body{padding:1.4rem 1.6rem 1.8rem}
+.modal-close{margin-left:auto}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:.5rem 1rem;padding:.75rem 0;border-top:1px solid var(--line)}
+@media(max-width:560px){.kv{grid-template-columns:1fr;gap:.15rem}}
+.kv dt{font-size:.74rem;letter-spacing:.04em;color:var(--gold-deep);font-weight:600;padding-top:.2rem}
+.kv dd{margin:0;font-size:.93rem;color:var(--text)}
+
+/* ---------- race matrix ---------- */
+.matrix-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface)}
+table.matrix{border-collapse:collapse;width:100%;min-width:840px}
+.matrix th,.matrix td{padding:.8rem;text-align:center;border-bottom:1px solid var(--line);font-size:.88rem}
+.matrix thead th{position:sticky;top:0;background:var(--surface-2);font-size:.74rem;letter-spacing:.04em;
+  color:var(--muted);font-weight:600;z-index:2}
+.matrix th[scope="row"]{text-align:left;font-family:var(--serif);font-weight:600;font-size:.98rem;
+  letter-spacing:-.02em;position:sticky;left:0;background:var(--surface);z-index:1;min-width:180px}
+.matrix tbody tr:hover td,.matrix tbody tr:hover th[scope="row"]{background:var(--raise)}
+.dots{display:inline-flex;gap:3px;cursor:help}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line-strong)}
+.dots i.on{background:var(--c,var(--gold))}
+.legend{display:flex;flex-wrap:wrap;gap:1.1rem;margin-top:1rem;color:var(--dim);font-size:.8rem;align-items:center}
+
+.tip{position:fixed;z-index:150;pointer-events:none;background:var(--surface-2);border:1px solid var(--line-strong);
+  border-radius:8px;padding:.5rem .7rem;font-size:.8rem;max-width:260px;box-shadow:var(--shadow);opacity:0;
+  transform:translateY(4px);transition:opacity .16s,transform .16s;color:var(--text)}
+.tip.show{opacity:1;transform:none}
+
+/* ---------- agents ---------- */
+.ladder{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:2.2rem}
+.rung{flex:1 1 130px;border:1px solid var(--line);border-radius:var(--r-sm);padding:.75rem .85rem;background:var(--surface)}
+.rung b{font-family:var(--serif);font-weight:600;font-size:.92rem;display:block;letter-spacing:-.02em}
+.rung span{font-size:.78rem;color:var(--dim)}
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-top:1.4rem}
+@media(max-width:820px){.loop{grid-template-columns:repeat(2,1fr)}}
+.node{border:1px solid var(--line);border-radius:var(--r);padding:1rem;background:var(--surface);transition:.35s var(--ease)}
+.node.hot{border-color:var(--gold);background:color-mix(in oklab,var(--gold) 7%,var(--surface))}
+.node .n{font-family:var(--mono);font-size:.7rem;color:var(--dim);letter-spacing:.05em}
+.node b{display:block;font-family:var(--serif);font-weight:600;margin:.25rem 0 .2rem;letter-spacing:-.02em}
+.node p{font-size:.82rem;color:var(--muted);margin:0}
+
+/* ---------- news ---------- */
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:960px){.news-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.news-grid{grid-template-columns:1fr}}
+.news{display:grid;gap:.55rem;align-content:start}
+.news .meta{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;color:var(--dim);font-size:.78rem}
+.news h3{font-size:1.05rem;line-height:1.3}
+.news p{font-size:.88rem;color:var(--muted);margin:0}
+.cat{font-size:.7rem;font-weight:600;letter-spacing:.03em;padding:.2rem .55rem;border-radius:99px;border:1px solid currentColor}
+.imp{display:inline-flex;gap:2px;align-items:center}
+.imp i{width:4px;height:11px;border-radius:1px;background:var(--line-strong)}
+.imp i.on{background:var(--gold)}
+.src-link{color:var(--gold);font-size:.83rem;font-weight:600;text-decoration:none}
+.src-link:hover{text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- compute pipeline ---------- */
+.pipe{display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;margin:1.6rem 0}
+@media(max-width:900px){.pipe{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.pipe{grid-template-columns:repeat(2,1fr)}}
+.pipe-step{border:1px solid var(--line);border-radius:var(--r-sm);padding:.9rem .7rem;background:var(--surface);text-align:center}
+.pipe-step b{display:block;font-family:var(--serif);font-size:.9rem;font-weight:600;letter-spacing:-.02em}
+.pipe-step span{font-size:.74rem;color:var(--dim)}
+.pipe-step .ico{width:22px;height:22px;margin:0 auto .5rem;stroke:var(--gold);fill:none;stroke-width:1.6}
+
+/* ---------- stack ---------- */
+.stack{display:grid;gap:.35rem}
+.layer{width:100%;text-align:left;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
+  padding:.95rem 1.1rem;cursor:pointer;display:grid;grid-template-columns:34px 1fr auto;gap:1rem;align-items:center;
+  transition:.25s var(--ease);position:relative;overflow:hidden;color:inherit}
+.layer::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--c);opacity:.7}
+.layer:hover{border-color:var(--line-strong)}
+.layer[aria-expanded="true"]{border-color:var(--c)}
+.layer .lv{font-family:var(--mono);font-size:.74rem;color:var(--dim)}
+.layer b{font-family:var(--serif);font-weight:600;font-size:1.02rem;letter-spacing:-.02em}
+.layer .sm{color:var(--muted);font-size:.84rem;margin-left:.6rem;font-weight:400;font-family:var(--sans)}
+@media(max-width:600px){.layer .sm{display:none}}
+.layer-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.layer-body.open{grid-template-rows:1fr}
+.layer-body>div{overflow:hidden}
+.layer-body p{margin:0;padding:.9rem 1.1rem 1.1rem 3.3rem;color:var(--muted);font-size:.92rem}
+
+/* ---------- charts ---------- */
+.chart-card{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);padding:1.5rem}
+.chart-card h3{font-size:1.08rem;margin-bottom:.2rem}
+.chart-card .cap{color:var(--dim);font-size:.78rem;margin-bottom:1.1rem}
+.bars{display:grid;gap:.8rem}
+.bar-row{display:grid;grid-template-columns:150px 1fr 72px;gap:.7rem;align-items:center;font-size:.86rem}
+@media(max-width:520px){.bar-row{grid-template-columns:96px 1fr 58px;font-size:.8rem}}
+.bar-track{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar-fill{height:100%;width:0;border-radius:99px;background:var(--gold);transition:width 1.1s var(--ease)}
+.bar-row .v{text-align:right;color:var(--dim);font-size:.78rem}
+.spark{width:100%;height:auto}
+.spark path.line{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linecap:round;
+  stroke-dasharray:1000;stroke-dashoffset:1000;transition:stroke-dashoffset 1.6s var(--ease)}
+.spark.in path.line{stroke-dashoffset:0}
+.spark .ax{stroke:var(--line);stroke-width:1}
+.spark text{fill:var(--dim);font-size:9px;font-family:var(--mono)}
+
+/* ---------- jobs spectrum ---------- */
+.spectrum{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);padding:2rem 1.5rem 1.5rem}
+.spec-bar{height:5px;border-radius:99px;
+  background:linear-gradient(90deg,var(--rubric),var(--clay),var(--gold));margin-bottom:1.6rem}
+.spec-ends{display:flex;justify-content:space-between;font-size:.76rem;letter-spacing:.04em;
+  color:var(--muted);font-weight:600;margin-bottom:.6rem}
+.job{display:grid;grid-template-columns:1fr 44%;gap:1rem;padding:.8rem 0;border-top:1px solid var(--line);align-items:center}
+@media(max-width:640px){.job{grid-template-columns:1fr;gap:.35rem}}
+.job b{font-family:var(--serif);font-weight:600;font-size:.98rem;letter-spacing:-.02em}
+.job span{color:var(--muted);font-size:.85rem}
+.job .pos{position:relative;height:8px;border-radius:99px;background:var(--line)}
+.job .pos i{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;transform:translate(-50%,-50%);
+  background:var(--surface);border:2px solid var(--gold);transition:left 1s var(--ease)}
+
+/* ---------- risks ---------- */
+.risk{border-left:2px solid var(--c);padding:.15rem 0 .15rem 1.1rem}
+.risk h3{font-size:1.05rem;margin-bottom:.25rem}
+.risk p{color:var(--muted);font-size:.89rem;margin:0}
+
+/* ---------- geopolitics ---------- */
+.map{position:relative;border:1px solid var(--line);border-radius:var(--r-lg);background:
+  radial-gradient(circle at 1px 1px,var(--grid-dot) 1px,transparent 0) 0 0/22px 22px,var(--surface);
+  aspect-ratio:16/8;width:100%;overflow:hidden}
+@media(max-width:760px){.map{aspect-ratio:5/4}.pin b{font-size:.66rem}}
+.pin{position:absolute;transform:translate(-50%,-50%);background:none;border:0;cursor:pointer;display:grid;
+  justify-items:center;gap:.25rem;color:var(--muted);padding:.2rem;z-index:1}
+.pin i{width:var(--s);height:var(--s);border-radius:50%;
+  background:color-mix(in oklab,var(--gold) 22%,transparent);
+  border:1px solid var(--gold);display:block;transition:.25s}
+.pin:hover i,.pin[aria-pressed="true"] i{background:var(--gold);transform:scale(1.12)}
+.pin b{font-size:.74rem;font-weight:600;white-space:nowrap;pointer-events:none}
+.pin:hover,.pin[aria-pressed="true"]{z-index:3;color:var(--text)}
+.map-note{position:absolute;right:12px;bottom:10px;color:var(--dim);font-size:.7rem}
+.geo-panel{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);padding:1.5rem;min-height:260px}
+
+/* ---------- open vs closed ---------- */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:760px){.versus{grid-template-columns:1fr}}
+.vs-col{border:1px solid var(--line);border-radius:var(--r-lg);padding:1.5rem;background:var(--surface)}
+.vs-col h3{font-size:1.25rem;margin-bottom:.9rem}
+.vs-col h4{font-size:.76rem;letter-spacing:.04em;color:var(--gold-deep);margin:1.2rem 0 .5rem;
+  font-weight:600;font-family:var(--sans)}
+.vs-col ul{margin:0;padding-left:1.1rem;color:var(--muted);font-size:.9rem}
+.vs-col li{margin-bottom:.35rem}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding-block:clamp(2.6rem,5vw,4rem) 2rem;margin-top:var(--step);
+  background:var(--surface-2)}
+.foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:2rem}
+@media(max-width:820px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.foot-grid{grid-template-columns:1fr}}
+.foot-grid h4{font-size:.76rem;letter-spacing:.04em;color:var(--gold-deep);margin-bottom:.8rem;font-weight:600}
+.foot-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+.foot-grid a{color:var(--muted);text-decoration:none;font-size:.9rem}
+.foot-grid a:hover{color:var(--text)}
+.foot-bottom{margin-top:2.4rem;padding-top:1.4rem;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;
+  gap:1rem;justify-content:space-between;color:var(--dim);font-size:.82rem}
+.wordmark{font-family:var(--serif);font-variation-settings:"opsz" 144;font-size:clamp(1.7rem,4vw,2.2rem);
+  font-weight:900;letter-spacing:-.045em}
+.wordmark .amh{font-family:var(--ethiopic);font-weight:700;color:var(--gold)}
+
+.totop{position:fixed;right:1.1rem;bottom:1.1rem;z-index:80;opacity:0;pointer-events:none;transform:translateY(10px);
+  transition:.3s var(--ease);background:var(--glass);backdrop-filter:blur(10px)}
+.totop.show{opacity:1;pointer-events:auto;transform:none}
+
+.rv{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+.btn-link{background:none;border:0;padding:0;color:var(--muted);font-size:.9rem;cursor:pointer;text-align:left}
+.btn-link:hover{color:var(--text)}
+code.mono{background:var(--raise);border:1px solid var(--line);border-radius:5px;padding:.05rem .3rem}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+  .hero h1 .l{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="aurora" aria-hidden="true"></div>
+<div class="field" aria-hidden="true"></div>
+
+<!-- ========================= NAVIGATION ========================= -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html">
+      <span class="glyph" aria-hidden="true">ዘ</span>
+      <b>ZEMEN <span class="amh" lang="am">ዘመን</span></b>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Sections">
+      <a class="site" href="index.html">Home</a>
+      <a href="#what">AI</a>
+      <a href="#history">History</a>
+      <a href="#models">Models</a>
+      <a href="#companies">Companies</a>
+      <a href="#race">AI race</a>
+      <a href="#agents">Agents</a>
+      <a href="#trends">Trends</a>
+      <a href="#news">News</a>
+      <a href="#compute">Chips</a>
+      <a href="#economy">Economy</a>
+      <a href="#risks">Risks</a>
+      <a href="#future">Future</a>
+      <a class="site" href="ai-agents.html">AI Agents ↗</a>
+      <a class="site" href="girum-portfolio.html">Portfolio ↗</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" id="searchBtn" aria-label="Search the AI world" title="Search (press /)">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+      </button>
+      <button class="icon-btn" id="themeBtn" aria-label="Switch to light mode" aria-pressed="false">
+        <svg viewBox="0 0 24 24" id="themeIcon"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ========================= SEARCH ========================= -->
+<div class="search-shade" id="searchShade" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-panel">
+    <div class="search-head">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+      <input id="searchInput" type="search" placeholder="Search the AI universe…" autocomplete="off"
+             aria-label="Search companies, concepts, models, events, trends and news" aria-controls="searchResults">
+      <button class="icon-btn" id="searchClose" aria-label="Close search">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="search-results" id="searchResults" role="listbox" aria-label="Search results"></div>
+    <div class="search-foot">
+      <span>Searches companies, concepts, models, milestones, trends and stories on this page</span>
+      <span><kbd>↑</kbd><kbd>↓</kbd> move <kbd>↵</kbd> open <kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ========================= HERO ========================= -->
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow"><span class="pulse" aria-hidden="true"></span> An interactive guide, updated by hand</span>
+        <h1 id="heroTitle" data-split>ARTIFICIAL INTELLIGENCE</h1>
+        <p class="sub">The technology reshaping how we think, work, create, compete, and live.</p>
+        <p class="lede">Artificial intelligence is software that learns patterns from very large amounts of
+          data, then uses those patterns to predict, generate, decide and act. It is not magic and it is not a
+          mind. It is statistics, hardware and engineering at a scale that only recently became possible — and
+          that scale is now rearranging industries, research and geopolitics.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#what">Explore the AI world</a>
+          <button class="btn btn-ghost" id="heroSearch">Search everything</button>
+        </div>
+      </div>
+      <div class="hero-canvas-wrap">
+        <canvas id="neural" aria-hidden="true"></canvas>
+        <span class="canvas-tag">Illustration: a small network learning to route signals</span>
+      </div>
+    </div>
+
+    <div class="stats" id="stats" aria-label="Orientation figures">
+      <div class="stat"><div class="num" data-count="1950" data-suffix="">0</div>
+        <div class="lab">Turing's question is posed</div><div class="note">VERIFIED · 1950 paper</div></div>
+      <div class="stat"><div class="num" data-count="1956" data-suffix="">0</div>
+        <div class="lab">The field gets its name</div><div class="note">VERIFIED · Dartmouth workshop</div></div>
+      <div class="stat"><div class="num" data-count="2017" data-suffix="">0</div>
+        <div class="lab">Transformer paper published</div><div class="note">VERIFIED · Google researchers</div></div>
+      <div class="stat"><div class="num" data-count="2022" data-suffix="">0</div>
+        <div class="lab">Chat interfaces reach the public</div><div class="note">VERIFIED · Nov 2022</div></div>
+      <div class="stat"><div class="num" data-count="10" data-suffix="+">0</div>
+        <div class="lab">Labs training frontier models</div><div class="note">ESTIMATE · see methodology</div></div>
+    </div>
+    <p style="color:var(--dim);font-size:.82rem;margin-top:.9rem;max-width:70ch">
+      These are orientation figures, not a live feed. Anything on this page that is a number, a ranking or a
+      market claim carries a label: <span class="tag fact">FACT</span> <span class="tag analysis">ANALYSIS</span>
+      <span class="tag estimate">ESTIMATE</span> <span class="tag forecast">FORECAST</span>.
+    </p>
+  </div>
+</section>
+
+<!-- ========================= WHAT IS AI ========================= -->
+<section id="what" aria-labelledby="whatH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">01 / Foundations</div>
+      <h2 id="whatH">What is AI, in plain language</h2>
+      <p>Ten ideas that cover most of what people mean when they say "AI". Open any card for the longer
+        version and an everyday example. No prior knowledge assumed.</p>
+    </div>
+    <div class="grid g3" id="conceptGrid"></div>
+
+    <div class="sec-index" style="margin-top:3rem">How the terms nest inside each other</div>
+    <div class="hier" id="hier"></div>
+    <p style="color:var(--muted);font-size:.9rem;margin-top:1rem;max-width:70ch">
+      Each step is a narrower idea sitting inside the one before it. Every large language model is a deep
+      learning system; not every deep learning system is a language model.</p>
+  </div>
+</section>
+
+<!-- ========================= HISTORY ========================= -->
+<section id="history" aria-labelledby="histH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">02 / Origins</div>
+      <h2 id="histH">Seventy-five years, in steps</h2>
+      <p>AI is not new. It has moved through waves of optimism, collapse and revival. Select a milestone to
+        read what happened and why it mattered.</p>
+    </div>
+    <div class="tl">
+      <div class="tl-rail" id="tlRail" role="listbox" aria-label="Timeline milestones" tabindex="0"></div>
+      <div class="tl-panel" id="tlPanel" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= REVOLUTION ========================= -->
+<section id="revolution" aria-labelledby="revH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">03 / The turn</div>
+      <h2 id="revH">Why AI suddenly got good</h2>
+      <p>Nothing about the mathematics changed overnight. Six things arrived at once, and each one multiplied
+        the others.</p>
+    </div>
+    <div class="converge" id="converge"></div>
+    <div class="equals">DATA × COMPUTE × ARCHITECTURE × SCALE = modern AI</div>
+    <p style="color:var(--muted);max-width:70ch;margin:1.6rem auto 0;text-align:center">
+      The uncomfortable part for researchers: much of the recent progress came less from clever new ideas than
+      from doing a small number of known things far bigger than anyone had tried. That pattern may not continue
+      forever, and several labs now argue the next gains come from reasoning and data quality rather than raw size.
+    </p>
+  </div>
+</section>
+
+<!-- ========================= MODEL LANDSCAPE ========================= -->
+<section id="models" aria-labelledby="modH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">04 / The model landscape</div>
+      <h2 id="modH">Not all models do the same job</h2>
+      <p>"AI model" covers a dozen different kinds of system. Here is what each type is for, with well-known
+        families as examples. Named families are illustrative, not a ranking — capability claims change monthly
+        and belong in benchmark reports with dates on them.</p>
+    </div>
+    <div id="modelList"></div>
+    <div class="note-box" style="margin-top:1.6rem">
+      <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9L1.9 18a2 2 0 001.7 3h16.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+      <span>This page deliberately avoids saying which model is "best". Leaderboards move, benchmarks are
+        gamed, and the honest answer depends on your task, budget and latency. Check a dated evaluation.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= COMPANIES ========================= -->
+<section id="companies" aria-labelledby="coH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">05 / Who is building it</div>
+      <h2 id="coH">The organisations</h2>
+      <p>Fourteen of the groups that matter most, filtered by what they primarily do. Select any card for a
+        full profile. Founding dates and headquarters are matters of record; strategy descriptions are
+        editorial analysis.</p>
+    </div>
+    <div class="chips" id="coFilters" role="group" aria-label="Filter companies"></div>
+    <div class="grid g3" id="coGrid"></div>
+    <p id="coEmpty" style="display:none;color:var(--muted)">No organisations match that filter. Choose another.</p>
+  </div>
+</section>
+
+<!-- ========================= THE AI RACE ========================= -->
+<section id="race" aria-labelledby="raceH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">06 / Competition</div>
+      <h2 id="raceH">The AI race</h2>
+      <p>The competition is not really about chatbots. It runs across eight layers at once — models, chips,
+        cloud capacity, consumer reach, agents, robotics, open weights and enterprise distribution. A company
+        can lead one column and be absent from the next.</p>
+    </div>
+    <div class="chips" id="raceFilters" role="group" aria-label="Filter the race table"></div>
+    <div class="matrix-scroll">
+      <table class="matrix" id="raceTable"></table>
+    </div>
+    <div class="legend">
+      <span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> deep, established position</span>
+      <span><span class="dots"><i class="on"></i><i class="on"></i><i></i><i></i></span> real but partial</span>
+      <span><span class="dots"><i></i><i></i><i></i><i></i></span> little or no public presence</span>
+      <span class="tag analysis">ANALYSIS</span>
+    </div>
+    <div class="note-box" style="margin-top:1.4rem">
+      <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9L1.9 18a2 2 0 001.7 3h16.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+      <span>Who is "winning"? There is no single scoreboard, and anyone who gives you one is selling something.
+        Different layers have different leaders, positions shift within months, and the most consequential
+        numbers — training costs, chip allocations, inference margins — are mostly private. Hover any row of dots
+        for the reasoning behind that cell.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= AGENTS ========================= -->
+<section id="agents" aria-labelledby="agH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">07 / Agents</div>
+      <h2 id="agH">From chatbots to agents</h2>
+      <p>A chatbot answers. An agent is given a goal, decides on its own steps, uses tools to carry them out,
+        checks the result and tries again. That difference is where most of the current engineering effort sits.</p>
+    </div>
+    <div class="ladder" id="ladder"></div>
+    <div class="grid g2" style="align-items:start">
+      <div>
+        <h3 style="font-size:1.25rem;margin-bottom:.8rem">What an agent actually has</h3>
+        <div class="grid" style="gap:.55rem" id="agentParts"></div>
+      </div>
+      <div>
+        <h3 style="font-size:1.25rem;margin-bottom:.8rem">Where it goes wrong</h3>
+        <div class="grid" style="gap:.55rem" id="agentRisks"></div>
+      </div>
+    </div>
+    <div class="sec-index" style="margin-top:2.6rem">The loop, running</div>
+    <div class="loop" id="loop"></div>
+    <p style="color:var(--dim);font-size:.82rem;margin-top:.9rem">Animated illustration of a typical
+      agent cycle. Real systems repeat the middle four steps many times before returning a result.</p>
+  </div>
+</section>
+
+<!-- ========================= TRENDS ========================= -->
+<section id="trends" aria-labelledby="trH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">08 / Now</div>
+      <h2 id="trH">What's happening now</h2>
+      <p>The active fronts, grouped by where the work is happening. Select a card to read what is actually
+        changing and what is still unresolved.</p>
+    </div>
+    <div class="chips" id="trFilters" role="group" aria-label="Filter trends"></div>
+    <div class="grid g3" id="trGrid"></div>
+  </div>
+</section>
+
+<!-- ========================= NEWS ========================= -->
+<section id="news" aria-labelledby="nwH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">09 / Dashboard</div>
+      <h2 id="nwH">AI news</h2>
+      <p>A newsroom layout wired to a swappable data layer. It is seeded with dated, checkable entries from
+        the public record — <strong>not</strong> a live feed, and nothing here is invented. Connect a real feed
+        where the code says so and the same cards will render today's stories.</p>
+    </div>
+    <div class="note-box" style="margin-bottom:1.5rem">
+      <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9L1.9 18a2 2 0 001.7 3h16.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+      <span><strong>Archive mode.</strong> These entries record events that already happened, each with its date
+        and primary source. To make this section live, replace <code class="mono">NEWS_SEED</code> with a fetch
+        from an RSS-to-JSON service or your own endpoint — the integration point is commented in the script
+        (<code class="mono">loadNews()</code>). Until then, treat this as a layout demonstration.</span>
+    </div>
+    <div class="chips" id="nwFilters" role="group" aria-label="Filter stories by category"></div>
+    <div class="news-grid" id="nwGrid"></div>
+    <p id="nwEmpty" style="display:none;color:var(--muted)">No entries in that category.</p>
+  </div>
+</section>
+
+<!-- ========================= COMPUTE ========================= -->
+<section id="compute" aria-labelledby="cpH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">10 / Silicon</div>
+      <h2 id="cpH">The compute war</h2>
+      <p>Training a frontier model means running trillions of arithmetic operations across thousands of
+        specialised chips for weeks, in buildings that consume as much electricity as a small town. Compute is
+        the hard constraint on modern AI, which makes it the real battleground.</p>
+    </div>
+    <div class="sec-index">From raw data to an answer on your screen</div>
+    <div class="pipe" id="pipe"></div>
+    <div class="grid g2" style="margin-top:2.2rem;align-items:start">
+      <div>
+        <h3 style="font-size:1.25rem;margin-bottom:.8rem">The physical layer nobody sees</h3>
+        <div class="grid" style="gap:.55rem" id="cpFacts"></div>
+      </div>
+      <div>
+        <h3 style="font-size:1.25rem;margin-bottom:.8rem">Who makes the silicon</h3>
+        <div class="grid" style="gap:.55rem" id="cpPlayers"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= STACK ========================= -->
+<section id="stack" aria-labelledby="stH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">11 / Architecture</div>
+      <h2 id="stH">The stack, bottom to top</h2>
+      <p>Every chatbot reply rests on ten layers, starting with a power station. Select a layer to see what
+        happens there and who operates it.</p>
+    </div>
+    <div class="stack" id="stackList"></div>
+  </div>
+</section>
+
+<!-- ========================= ECONOMY ========================= -->
+<section id="economy" aria-labelledby="ecH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">12 / Money</div>
+      <h2 id="ecH">The AI economy</h2>
+      <p>Where the money goes, in shape rather than in dollars. The charts below show relative proportions and
+        directions of travel, not audited figures.</p>
+    </div>
+    <div class="note-box" style="margin-bottom:1.6rem">
+      <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9L1.9 18a2 2 0 001.7 3h16.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+      <span><strong>Illustrative shapes, not audited data.</strong> Investment totals, cloud revenue and
+        capital-expenditure figures change every quarter and are reported inconsistently. For real numbers use
+        company filings, the Stanford AI Index, or a dated report from Reuters, the FT or Bloomberg — and check
+        the publication date before quoting it.</span>
+    </div>
+    <div class="grid g2" style="align-items:start">
+      <div class="chart-card">
+        <h3>Where AI capital tends to concentrate</h3>
+        <div class="cap">Relative weighting · illustrative · not a measurement</div>
+        <div class="bars" id="moneyBars"></div>
+      </div>
+      <div class="chart-card">
+        <h3>The pattern of an infrastructure build-out</h3>
+        <div class="cap">Schematic curve · spending rises before revenue · shape only, no units</div>
+        <svg class="spark" id="spark" viewBox="0 0 320 170" role="img"
+             aria-label="Schematic line chart showing capital spending rising ahead of revenue">
+          <line class="ax" x1="30" y1="140" x2="308" y2="140"/><line class="ax" x1="30" y1="14" x2="30" y2="140"/>
+          <path class="line" d="M30 132 L70 126 L110 112 L150 88 L190 58 L230 36 L270 24 L308 18"/>
+          <text x="30" y="156">early</text><text x="152" y="156">scaling</text><text x="268" y="156">maturity</text>
+          <text x="4" y="20">high</text><text x="6" y="138">low</text>
+        </svg>
+        <p style="color:var(--muted);font-size:.86rem;margin:1rem 0 0">Every large infrastructure cycle —
+          railways, fibre, mobile networks — has spent heavily in advance of returns. Some paid back
+          extraordinarily; some did not. Which one AI turns out to be is genuinely unsettled.</p>
+      </div>
+    </div>
+    <div class="grid g3" style="margin-top:1rem" id="ecCards"></div>
+  </div>
+</section>
+
+<!-- ========================= JOBS ========================= -->
+<section id="jobs" aria-labelledby="jbH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">13 / Work</div>
+      <h2 id="jbH">Will AI take our jobs?</h2>
+      <p>The honest answer is: it depends on the task, not the job title. Most roles are bundles of tasks, and
+        AI absorbs some of them while making others more valuable. Here is where a range of work currently sits
+        between full automation and human-plus-machine.</p>
+    </div>
+    <div class="spectrum">
+      <div class="spec-ends"><span>AUTOMATION</span><span>AUGMENTATION</span></div>
+      <div class="spec-bar"></div>
+      <div id="jobList"></div>
+    </div>
+    <div class="grid g3" style="margin-top:1.4rem" id="jobNotes"></div>
+    <p style="color:var(--dim);font-size:.82rem;margin-top:1rem;max-width:74ch">
+      <span class="tag analysis">ANALYSIS</span> Positions are editorial judgement based on how much of the work
+      is routine, verifiable and low-stakes. Labour-market outcomes also depend on regulation, cost, liability and
+      how quickly organisations actually change — historically the slowest variable of all.
+    </p>
+  </div>
+</section>
+
+<!-- ========================= RISKS ========================= -->
+<section id="risks" aria-labelledby="rkH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">14 / Costs</div>
+      <h2 id="rkH">The other side of AI</h2>
+      <p>Not doom, and not dismissal. These are the problems that researchers, regulators and the companies
+        themselves treat as real, along with what is currently being done about each.</p>
+    </div>
+    <div class="grid g2" id="riskList"></div>
+  </div>
+</section>
+
+<!-- ========================= GEOPOLITICS ========================= -->
+<section id="world" aria-labelledby="woH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">15 / Geopolitics</div>
+      <h2 id="woH">The global AI race</h2>
+      <p>AI capability now sits alongside energy and semiconductors as a matter of national strategy. Select a
+        region for its position on research, chips, regulation and infrastructure.</p>
+    </div>
+    <div class="grid g2" style="align-items:start;gap:1.2rem">
+      <div class="map" id="map" role="group" aria-label="Schematic map of AI ecosystems">
+        <span class="map-note">schematic · not to scale</span>
+      </div>
+      <div class="geo-panel" id="geoPanel" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= OPEN VS CLOSED ========================= -->
+<section id="open" aria-labelledby="opH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">16 / Governance of code</div>
+      <h2 id="opH">Open weights, closed models</h2>
+      <p>One of the field's sharpest disagreements, and one where reasonable people land in different places.
+        Note that "open" in AI usually means downloadable weights, not full open source: training data and code
+        are often still withheld.</p>
+    </div>
+    <div class="versus">
+      <div class="vs-col">
+        <h3>Closed / proprietary</h3>
+        <p style="color:var(--muted);font-size:.92rem">The model runs on the provider's servers. You reach it
+          through an API or product; the weights never leave.</p>
+        <h4>ARGUMENTS FOR</h4>
+        <ul>
+          <li>Misuse can be monitored, rate-limited and revoked after release</li>
+          <li>Safety mitigations can be updated centrally for every user at once</li>
+          <li>Costly training runs have a clearer route to being paid for</li>
+          <li>Tight integration with products and infrastructure</li>
+        </ul>
+        <h4>ARGUMENTS AGAINST</h4>
+        <ul>
+          <li>Outside researchers cannot inspect what they cannot download</li>
+          <li>Dependence on a vendor's pricing, availability and policy changes</li>
+          <li>Capability concentrates in a small number of organisations</li>
+          <li>Data leaves your environment unless specific arrangements are made</li>
+        </ul>
+      </div>
+      <div class="vs-col">
+        <h3>Open / open-weight</h3>
+        <p style="color:var(--muted);font-size:.92rem">The trained weights are published for download. Anyone
+          can run, inspect, fine-tune or modify the model on their own hardware.</p>
+        <h4>ARGUMENTS FOR</h4>
+        <ul>
+          <li>Independent scrutiny of behaviour, bias and failure modes</li>
+          <li>Runs locally — useful for regulated data, offline work and low latency</li>
+          <li>Specialisation on domain data without sending it anywhere</li>
+          <li>Lowers costs and spreads capability beyond a few firms</li>
+        </ul>
+        <h4>ARGUMENTS AGAINST</h4>
+        <ul>
+          <li>Safety training can be removed by anyone with the weights</li>
+          <li>Release is irreversible: a published model cannot be recalled</li>
+          <li>Running and securing it becomes the deployer's responsibility</li>
+          <li>Licences vary widely; several "open" models carry real restrictions</li>
+        </ul>
+      </div>
+    </div>
+    <p style="color:var(--muted);max-width:74ch;margin-top:1.4rem">
+      In practice most serious organisations use both — closed models where capability and support matter,
+      open weights where control, cost or privacy matter. The debate is unresolved because it turns on empirical
+      questions about misuse that nobody has settled yet.</p>
+  </div>
+</section>
+
+<!-- ========================= FUTURE ========================= -->
+<section id="future" aria-labelledby="fuH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index">17 / Ahead</div>
+      <h2 id="fuH">The next five years</h2>
+      <p><span class="tag forecast">FORECAST</span> &nbsp;Everything in this section is speculation. It is
+        informed by current research directions, but the AI field has an unbroken record of surprising
+        forecasters in both directions. Read it as a set of open questions, not predictions.</p>
+    </div>
+    <div class="grid g3" id="futureGrid"></div>
+    <div class="note-box" style="margin-top:1.6rem">
+      <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9L1.9 18a2 2 0 001.7 3h16.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+      <span>Two things forecasters have consistently got wrong: the speed of capability gains, which has usually
+        been underestimated, and the speed of real-world adoption, which has usually been overestimated. The gap
+        between what a model can do in a demo and what an organisation can safely deploy remains wide.</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ========================= FOOTER ========================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="wordmark">THE AI WORLD</div>
+        <p style="color:var(--muted);font-size:.92rem;max-width:38ch;margin-top:.7rem">
+          Part of ZEMEN <span class="amh" lang="am" style="font-family:var(--ethiopic)">ዘመን</span> — an
+          interactive guide to what artificial intelligence is, who is building it, and what is genuinely
+          unsettled about where it goes.</p>
+        <p style="color:var(--gold);font-size:.88rem;margin-top:1rem">
+          AI changes fast. Verify important information against primary sources.</p>
+      </div>
+      <div>
+        <h4>SECTIONS</h4>
+        <ul>
+          <li><a href="#what">What is AI</a></li><li><a href="#history">History</a></li>
+          <li><a href="#models">Models</a></li><li><a href="#companies">Companies</a></li>
+          <li><a href="#race">The race</a></li><li><a href="#agents">Agents</a></li>
+          <li><a href="#revolution">Why AI works now</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>MORE</h4>
+        <ul>
+          <li><a href="#trends">Trends</a></li><li><a href="#news">News</a></li>
+          <li><a href="#compute">Chips</a></li><li><a href="#economy">Economy</a></li>
+          <li><a href="#jobs">Jobs</a></li><li><a href="#world">Geopolitics</a></li>
+          <li><a href="#open">Open vs closed</a></li><li><a href="#risks">Risks</a></li>
+          <li><a href="#future">What's next</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>ZEMEN ዘመን</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="ai-agents.html">AI Agents</a></li>
+          <li><a href="girum-portfolio.html">Portfolio</a></li>
+          <li><button class="btn-link" data-doc="about">About</button></li>
+          <li><button class="btn-link" data-doc="sources">Sources</button></li>
+          <li><button class="btn-link" data-doc="method">Methodology</button></li>
+          <li><button class="btn-link" data-doc="privacy">Privacy</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>A static, self-contained page. No tracking, no cookies, no backend.</span>
+      <span>Content is explanatory, not advisory</span>
+    </div>
+  </div>
+</footer>
+
+<button class="icon-btn totop" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+
+<!-- generic modal used for company profiles and footer documents -->
+<div class="modal-shade" id="modalShade" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <div id="modalLogo"></div>
+      <div>
+        <h3 id="modalTitle"></h3>
+        <div id="modalSub" style="color:var(--dim);font-size:.85rem;margin-top:.2rem"></div>
+      </div>
+      <button class="icon-btn modal-close" id="modalClose" aria-label="Close">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+<div class="tip" id="tip" role="status"></div>
+
+<script>
+/* =====================================================================
+   THE AI WORLD — ZEMEN ዘመን
+   No dependencies. All content lives in the DATA block below so it can be
+   edited, replaced or fed from an API without touching the rendering code.
+   ===================================================================== */
+(function(){
+"use strict";
+const $  = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ================== DATA ================== */
+
+const CONCEPTS = [
+ {t:"Artificial intelligence",one:"Software that performs tasks we associate with human thinking.",
+  d:"An umbrella term, not a single technology. It covers anything that lets a machine recognise, predict, decide or generate in ways that used to require a person. The term has meant different things in each decade — logic engines in the 1960s, expert systems in the 1980s, learned statistical models today.",
+  ex:"Your phone grouping photos by face; a bank flagging an unusual transaction."},
+ {t:"Machine learning",one:"Instead of writing the rules, you show the system examples.",
+  d:"Traditional software follows rules a programmer wrote. A machine learning system is given thousands of labelled examples and adjusts its internal numbers until it can produce the right answer on examples it has never seen. Nobody writes the rule for what a cat looks like; the system derives it.",
+  ex:"A spam filter that improves as you mark messages, without anyone editing its code."},
+ {t:"Deep learning",one:"Machine learning using many stacked layers of artificial neurons.",
+  d:"A neural network is a large grid of numbers arranged in layers. Each layer transforms what it receives and passes it on. 'Deep' just means many layers. Early layers pick up simple features — edges, sounds, letter patterns — and later layers combine them into complex concepts. This is the technique behind almost all modern AI.",
+  ex:"Recognising speech in a noisy room, where handwritten rules always failed."},
+ {t:"Generative AI",one:"Models that produce new content rather than only classifying it.",
+  d:"Older systems answered closed questions: is this spam, is this a tumour. Generative models produce open-ended output — sentences, images, audio, code — by repeatedly predicting what plausibly comes next. The output is new, which is also why it can be confidently wrong.",
+  ex:"Writing a first draft, generating an illustration, turning a description into working code."},
+ {t:"Large language models",one:"Text prediction, scaled until it becomes something more useful.",
+  d:"An LLM is trained to predict the next fragment of text across an enormous body of writing. Done at sufficient scale, that single objective produces systems that can summarise, translate, reason through problems and follow instructions. They hold no facts as facts — they hold statistical relationships between words, which is why verification matters.",
+  ex:"Asking an assistant to rewrite a contract clause in plain English."},
+ {t:"Computer vision",one:"Systems that interpret images and video.",
+  d:"Vision models turn pixels into structure: what objects are present, where they are, what is happening across frames. It was the first area where deep learning decisively beat older methods, and it underpins medical imaging, industrial inspection, self-driving cars and camera search.",
+  ex:"A warehouse camera spotting a damaged package on a moving belt."},
+ {t:"Speech and audio AI",one:"Turning sound into text, and text back into natural speech.",
+  d:"Two directions: recognition converts speech into text robustly across accents and background noise; synthesis produces speech with natural rhythm and emotion. Recent systems handle both in one model, which is what allows real-time spoken conversation with an assistant — and what makes voice cloning a genuine problem.",
+  ex:"Live captioning a meeting, or an assistant you can interrupt mid-sentence."},
+ {t:"Robotics",one:"AI that has to act in the physical world, with physical consequences.",
+  d:"Robotics adds constraints software never faces: gravity, friction, worn parts, cluttered rooms and no undo button. Progress has been slower than in text or images because collecting real-world training data is expensive and mistakes cost money. Recent work uses simulation and large multi-task models to help robots generalise.",
+  ex:"A warehouse arm picking unfamiliar items; a robot folding laundry it has never seen."},
+ {t:"AI agents",one:"Systems given a goal that plan and act, rather than just reply.",
+  d:"An agent breaks a goal into steps, chooses tools — a search engine, a database, a code interpreter, a browser — executes them, reads the results and adjusts. The model becomes a controller rather than a text generator. This is powerful and fragile: small errors early can compound across a long chain of actions.",
+  ex:"'Reconcile these invoices against the ledger and flag mismatches.'"},
+ {t:"Multimodal AI",one:"One model that handles text, images, audio and video together.",
+  d:"Rather than bolting separate systems together, multimodal models represent different kinds of input in a shared internal space. You can show a photo and ask about it, or share a screen recording and get a written summary. It matters because most real problems arrive as a mixture of formats, not clean text.",
+  ex:"Photographing a broken appliance and asking what the part is called."}
+];
+
+const HIER = [
+ {n:"Artificial intelligence",s:"The whole field",c:"var(--dim)"},
+ {n:"Machine learning",s:"Learns from examples",c:"var(--gold-deep)"},
+ {n:"Deep learning",s:"Layered neural networks",c:"var(--indigo)"},
+ {n:"Generative AI",s:"Produces new content",c:"var(--gold)"},
+ {n:"Foundation models",s:"General-purpose, reusable",c:"var(--clay)"},
+ {n:"Agents",s:"Plan, use tools, act",c:"var(--rubric)"}
+];
+
+const TIMELINE = [
+ {y:"1943–49",t:"The first mathematical neuron",why:"McCulloch and Pitts described a simplified neuron as a logical unit; Donald Hebb proposed that connections strengthen with use. The core idea of a learning network predates the computer industry.",who:"Warren McCulloch, Walter Pitts, Donald Hebb",imp:"Established that thinking might be modelled as connections between simple units — the foundation everything later rests on."},
+ {y:"1950",t:"Turing asks whether machines can think",why:"Alan Turing's paper 'Computing Machinery and Intelligence' proposed replacing the unanswerable question with a practical test of indistinguishable conversation.",who:"Alan Turing",imp:"Framed machine intelligence as an empirical question, and anticipated many objections still argued about today."},
+ {y:"1956",t:"The field gets a name",why:"A summer workshop at Dartmouth College gathered researchers around the proposal that learning and intelligence could be described precisely enough to be simulated. The term 'artificial intelligence' was coined for it.",who:"John McCarthy, Marvin Minsky, Claude Shannon, Nathaniel Rochester",imp:"AI became a distinct discipline with its own agenda, funding and — soon — its own overpromising."},
+ {y:"1960s–70s",t:"Symbolic AI and the first winter",why:"Researchers encoded knowledge as explicit symbols and logical rules. Impressive in narrow demonstrations, it broke down on the messiness of the real world. Funding was withdrawn on both sides of the Atlantic.",who:"MIT, Stanford, Carnegie Mellon, SRI",imp:"Established a recurring pattern: dramatic claims, disappointing generality, collapse of support, quiet rebuilding."},
+ {y:"1980s",t:"Expert systems reach business",why:"Commercial systems captured specialist knowledge as thousands of if-then rules for tasks like configuring computers or diagnosing faults. They worked — until the rules needed updating, which required experts and never stopped.",who:"Corporate research labs, Japan's Fifth Generation programme",imp:"The first time AI made real money, and the first demonstration that hand-written knowledge does not scale."},
+ {y:"1990s",t:"Statistics quietly wins",why:"Attention moved from encoding knowledge to learning it from data. Support vector machines, decision trees and probabilistic methods delivered steady results in search, speech and finance without claiming to be intelligent.",who:"Academic ML community, telecoms and finance labs",imp:"Set the intellectual direction — learn from data — that everything after 2012 accelerated."},
+ {y:"1997",t:"Deep Blue defeats Kasparov",why:"IBM's chess machine beat the reigning world champion in a six-game match, using enormous purpose-built search rather than learning.",who:"IBM; Garry Kasparov",imp:"A global demonstration that machines could beat humans at a task long treated as a proxy for intellect — and a lesson that beating humans at one game generalises to nothing."},
+ {y:"2009–12",t:"ImageNet and AlexNet",why:"A large labelled image dataset made rigorous comparison possible. In 2012 a deep neural network trained on consumer GPUs cut the image recognition error rate dramatically and beat every hand-engineered competitor.",who:"Fei-Fei Li (ImageNet); Alex Krizhevsky, Ilya Sutskever, Geoffrey Hinton (AlexNet)",imp:"The moment the field switched to deep learning. It also revealed the recipe: big data, big compute, simple architecture."},
+ {y:"2016",t:"AlphaGo defeats Lee Sedol",why:"DeepMind's system won 4–1 at Go, a game with too many positions for brute-force search, by combining neural networks with self-play and tree search. Its move 37 in game two was described by professionals as creative rather than merely strong.",who:"Google DeepMind; Lee Sedol",imp:"Showed that learned intuition could exceed human judgement in an open-ended domain, and made reinforcement learning central to the field."},
+ {y:"2017",t:"The Transformer",why:"A Google paper introduced an architecture based entirely on attention — letting a model weigh every part of its input against every other part, in parallel. It trained far better on modern hardware than anything before it.",who:"Vaswani et al., Google (the paper 'Attention Is All You Need')",imp:"The single most consequential architecture in modern AI. Nearly every major model since — text, image, audio, video — is a descendant."},
+ {y:"2018–20",t:"Scaling becomes the strategy",why:"Successive language models showed that performance improved predictably with more data, more parameters and more compute. Foundation models emerged: train once at enormous cost, adapt to many tasks cheaply.",who:"OpenAI, Google, academic scaling-law research",imp:"Turned AI research into an infrastructure business, and put frontier work beyond the reach of most universities."},
+ {y:"2022",t:"Generative AI reaches everyone",why:"Diffusion models put convincing image generation into public hands, and in November a conversational interface to a large language model became one of the fastest-adopted consumer products on record.",who:"OpenAI, Stability AI, Midjourney and others",imp:"AI stopped being a research topic and became a consumer expectation. Every major software company reorganised around it within a year."},
+ {y:"2023",t:"Commercialisation and the first rules",why:"More capable multimodal models shipped into products across the industry, enterprises began serious deployment, and governments moved from principles to draft legislation.",who:"OpenAI, Google, Anthropic, Meta, Microsoft; EU, US, UK policymakers",imp:"The year AI became a procurement decision and a regulatory subject rather than a demo."},
+ {y:"2024",t:"Multimodal, open weights, and law",why:"Models handling text, image, audio and video together became standard, downloadable open-weight models narrowed the gap with closed ones, and the EU AI Act entered into force on 1 August 2024 as the first comprehensive AI law.",who:"Meta, Mistral, Alibaba, Google, OpenAI, Anthropic; European Union",imp:"Capability spread outward while governance began to bite. Both trends are still playing out."},
+ {y:"2025–26",t:"Reasoning, agents and infrastructure",why:"Attention moved to models that spend longer working through problems step by step, to agents that use tools and act over many steps, and to the electricity, land and chips required to run all of it. Efficiency-focused open models showed frontier-adjacent results at lower cost.",who:"Frontier labs, chipmakers, cloud providers, energy operators",imp:"The competitive question shifted from 'whose model is smartest' to 'who can deploy reliable systems at acceptable cost and power'.",tag:"Recent — verify specifics against dated sources"}
+];
+
+const FORCES = [
+ {k:"01",t:"Data",p:"Decades of digitised text, images, audio and code created a training corpus that simply did not exist before the internet matured. Quality and licensing are now bigger constraints than quantity.",c:"var(--gold-deep)",v:88},
+ {k:"02",t:"Compute",p:"Graphics chips built for games turned out to be ideal for the parallel arithmetic neural networks need. Available training compute grew by orders of magnitude in a decade.",c:"var(--indigo)",v:95},
+ {k:"03",t:"Neural networks",p:"An old idea from the 1940s finally had enough data and hardware to work. Layered networks learn their own features instead of waiting for engineers to specify them.",c:"var(--gold)",v:72},
+ {k:"04",t:"Transformers",p:"An architecture that processes a whole sequence at once and learns which parts matter. It removed the bottleneck that had limited earlier sequence models and used modern hardware efficiently.",c:"var(--clay)",v:92},
+ {k:"05",t:"Foundation models",p:"Train one general model at great expense, then adapt it to thousands of tasks cheaply. This changed AI from a bespoke engineering project into a platform.",c:"var(--rubric)",v:80},
+ {k:"06",t:"Scale",p:"Results improved smoothly and predictably as models, data and compute grew together. That predictability justified spending previously unthinkable sums.",c:"var(--verdigris)",v:85}
+];
+
+const MODEL_TYPES = [
+ {t:"Large language models",k:"text in · text out",p:"General-purpose text systems that follow instructions, summarise, translate, analyse and write. The default interface to AI for most people.",f:["GPT family","Claude family","Gemini","Llama","Qwen","Mistral"]},
+ {t:"Reasoning models",k:"deliberate before answering",p:"Language models trained to work through a problem in explicit steps before responding, trading response time for accuracy on maths, code and multi-step logic.",f:["o-series","reasoning modes in frontier models","DeepSeek-R1"]},
+ {t:"Multimodal models",k:"text · image · audio · video",p:"Accept and often produce more than one kind of data in a single model, so you can show something rather than describe it.",f:["Gemini","GPT-4o family","Claude with vision"]},
+ {t:"Image models",k:"prompt in · picture out",p:"Mostly diffusion systems that start from noise and refine towards an image matching a description. Now used in design, marketing and film pre-production.",f:["Stable Diffusion","Midjourney","Imagen","DALL·E","FLUX"]},
+ {t:"Video models",k:"prompt in · motion out",p:"The most compute-hungry generative category, because coherence must hold across time as well as space. Improving quickly; still hard to control precisely.",f:["Sora","Veo","Runway","Kling"]},
+ {t:"Speech and audio models",k:"sound ↔ text",p:"Transcription, translation, synthesis and increasingly full spoken conversation with low enough latency to interrupt.",f:["Whisper","ElevenLabs","native voice modes"]},
+ {t:"Coding models",k:"repository-aware",p:"Trained heavily on source code and tuned to read a codebase, propose changes, run tests and explain failures. Currently the clearest commercial application of AI.",f:["Claude Code","GitHub Copilot","Codex-style models","Qwen-Coder"]},
+ {t:"Embedding models",k:"text in · coordinates out",p:"Turn text or images into lists of numbers where similar meanings sit close together. The quiet workhorse behind semantic search, recommendations and retrieval.",f:["OpenAI embeddings","open sentence-transformer families"]},
+ {t:"Small language models",k:"runs on a laptop or phone",p:"Compact models tuned for a narrower job. Cheaper, faster, private by default, and often good enough — a major trend as costs come under scrutiny.",f:["Phi","Gemma","Llama small variants","Ministral"]},
+ {t:"Open-weight models",k:"downloadable parameters",p:"Not a capability category but a distribution one: the trained weights are published, so anyone can run or fine-tune them on their own hardware.",f:["Llama","Mistral","Qwen","Gemma","DeepSeek"]},
+ {t:"Agentic systems",k:"models plus tools plus a loop",p:"Not a model type at all — an architecture that wraps a model in planning, tool access, memory and verification. The model is one component of a larger program.",f:["computer-use agents","coding agents","enterprise workflow agents"]}
+];
+
+const COMPANIES = [
+ {id:"openai",n:"OpenAI",c:"var(--verdigris)",cat:["frontier"],founded:"2015",hq:"San Francisco, US",
+  short:"Consumer reach and a broad model family, from a research lab that became a product company.",
+  products:"ChatGPT, developer API, image and video generation, agentic tools",
+  models:"GPT family, o-series reasoning models, DALL·E, Sora, Whisper",
+  edge:"Enormous consumer mindshare and the widest developer distribution of any frontier lab.",
+  partners:"Deep commercial and infrastructure relationship with Microsoft; a large ecosystem of enterprise deployments.",
+  strategy:"Extend from a chat product into a general assistant and agent platform, while securing very large compute commitments.",
+  race:[4,1,1,4,4,0,1,3],note:"No in-house chip line publicly shipping; compute is contracted."},
+ {id:"gdm",n:"Google DeepMind",c:"var(--gold)",cat:["frontier","bigtech"],founded:"DeepMind 2010; merged unit 2023",hq:"London, UK & Mountain View, US",
+  short:"The broadest research portfolio in the field, attached to global distribution and its own silicon.",
+  products:"Gemini apps and API, AI in Search, Workspace and Android, Vertex AI",
+  models:"Gemini, Gemma open weights, Imagen, Veo, AlphaFold and scientific models",
+  edge:"Full vertical integration: research, TPUs, data centres, cloud, and billions of product users.",
+  partners:"Google Cloud customers; extensive academic and scientific collaborations.",
+  strategy:"Put Gemini into every Google surface while pushing scientific AI and its own accelerator roadmap.",
+  race:[4,4,4,4,3,2,3,4],note:"One of very few players present at every layer of the stack."},
+ {id:"anthropic",n:"Anthropic",c:"var(--clay)",cat:["frontier"],founded:"2021",hq:"San Francisco, US",
+  short:"A safety-focused lab with unusually strong traction in enterprise and software engineering.",
+  products:"Claude apps, developer API, Claude Code, enterprise deployments",
+  models:"Claude model family",
+  edge:"Reputation for reliability on long, complex tasks and a public safety framework governing releases.",
+  partners:"Investment and cloud relationships with Amazon and Google; major enterprise and developer platforms.",
+  strategy:"Frontier capability paired with published safety policy, aimed at businesses and developers rather than mass consumer scale.",
+  race:[4,0,0,2,4,0,0,4],note:"Deliberately narrower surface area than the platform companies."},
+ {id:"microsoft",n:"Microsoft",c:"var(--indigo)",cat:["bigtech"],founded:"1975",hq:"Redmond, US",
+  short:"The distribution layer: AI arriving through software hundreds of millions already use.",
+  products:"Copilot across Windows and Office, Azure AI, GitHub Copilot, Foundry",
+  models:"Own MAI and Phi small models, plus partner models served through Azure",
+  edge:"Enterprise relationships, an installed base measured in the hundreds of millions, and global data centre capacity.",
+  partners:"Long-running OpenAI relationship; a broad model marketplace on Azure.",
+  strategy:"Be the place enterprises buy and run AI, whoever built the model.",
+  race:[3,2,4,4,4,0,2,4],note:"Custom silicon programme exists; scale relative to merchant GPUs is not public."},
+ {id:"meta",n:"Meta",c:"var(--gold-deep)",cat:["bigtech","open"],founded:"2004 (FAIR 2013)",hq:"Menlo Park, US",
+  short:"The largest force behind downloadable open-weight models, funded by an advertising business.",
+  products:"AI features across Facebook, Instagram and WhatsApp; Ray-Ban smart glasses",
+  models:"Llama open-weight family",
+  edge:"Publishing capable weights freely built an enormous developer ecosystem — and pressured closed pricing.",
+  partners:"Cloud providers distributing Llama; hardware partnership with EssilorLuxottica for glasses.",
+  strategy:"Commoditise the model layer, own the consumer surface, and push wearables as an AI interface.",
+  race:[3,1,0,4,2,1,4,1],note:"Licence terms on Llama include restrictions, so 'open' is qualified."},
+ {id:"nvidia",n:"NVIDIA",c:"var(--verdigris)",cat:["chips"],founded:"1993",hq:"Santa Clara, US",
+  short:"The company whose chips most AI training and much inference currently runs on.",
+  products:"Data centre GPUs, networking, CUDA software, DGX systems, robotics platforms",
+  models:"Open research models; primarily an infrastructure company",
+  edge:"CUDA. Two decades of software, libraries and trained engineers make switching costly even when rival silicon is competitive.",
+  partners:"Every major cloud provider and AI lab; deep ties across the server supply chain.",
+  strategy:"Sell whole systems — chips, interconnect, software — rather than components, and extend into robotics.",
+  race:[2,4,2,0,2,4,2,3],note:"Dominant in AI accelerators; exact share figures vary by source and quarter."},
+ {id:"amazon",n:"Amazon / AWS",c:"var(--clay)",cat:["bigtech","chips"],founded:"1994 (AWS 2006)",hq:"Seattle, US",
+  short:"The largest cloud provider, building its own accelerators and hosting rivals' models.",
+  products:"Bedrock model marketplace, SageMaker, Alexa, Trainium and Inferentia chips",
+  models:"Nova family plus a wide catalogue of third-party models",
+  edge:"Cloud footprint and a neutral position: customers can run almost any model on AWS.",
+  partners:"Major investment in Anthropic; model providers across the industry.",
+  strategy:"Be the infrastructure and marketplace layer, and reduce dependence on merchant GPUs with in-house silicon.",
+  race:[2,3,4,2,3,3,1,4],note:"Robotics presence is largely warehouse automation rather than humanoids."},
+ {id:"apple",n:"Apple",c:"var(--bone)",cat:["bigtech"],founded:"1976",hq:"Cupertino, US",
+  short:"The on-device bet: smaller models running privately on hardware Apple designs itself.",
+  products:"Apple Intelligence features, Siri, on-device silicon with neural accelerators",
+  models:"Compact on-device models plus larger server models on Apple's own private compute",
+  edge:"Controls silicon, operating system and distribution across more than a billion devices.",
+  partners:"Selective third-party model integrations for some tasks.",
+  strategy:"Privacy-preserving, mostly local AI woven into the OS rather than sold as a separate product.",
+  race:[2,3,1,4,1,0,0,1],note:"Slower and quieter than rivals by design; strategy is device-first."},
+ {id:"xai",n:"xAI",c:"var(--indigo)",cat:["frontier"],founded:"2023",hq:"Bay Area, US",
+  short:"A young lab that scaled training infrastructure unusually fast.",
+  products:"Grok assistant, API, integration with the X platform",
+  models:"Grok family",
+  edge:"Speed of buildout and a distribution channel through a large social platform.",
+  partners:"Chip and infrastructure suppliers; the X platform.",
+  strategy:"Rapid capability scaling with a distinct product voice and tight social integration.",
+  race:[3,0,1,3,2,1,1,1],note:"Founded recently; public track record is short."},
+ {id:"alibaba",n:"Alibaba",c:"var(--clay)",cat:["china","open"],founded:"1999",hq:"Hangzhou, China",
+  short:"China's most influential open-weight publisher, attached to a major cloud business.",
+  products:"Alibaba Cloud AI services, consumer assistants, enterprise platforms",
+  models:"Qwen family, widely released as open weights",
+  edge:"Qwen models are among the most downloaded and fine-tuned open weights worldwide.",
+  partners:"Broad domestic enterprise base; global developer community around Qwen.",
+  strategy:"Use open weights to build ecosystem reach while monetising through cloud.",
+  race:[3,1,3,3,2,1,4,3],note:"Availability of some services varies by jurisdiction."},
+ {id:"tencent",n:"Tencent",c:"var(--gold-deep)",cat:["china"],founded:"1998",hq:"Shenzhen, China",
+  short:"Consumer distribution at vast scale through messaging, gaming and social products.",
+  products:"Cloud AI services, assistant features in consumer apps",
+  models:"Hunyuan family",
+  edge:"Reach through WeChat and one of the world's largest gaming operations.",
+  partners:"Domestic cloud and enterprise customers.",
+  strategy:"Embed AI in existing consumer and gaming surfaces rather than lead on frontier training.",
+  race:[2,0,3,4,1,1,2,2],note:"Frontier training scale is less publicly documented than peers."},
+ {id:"baidu",n:"Baidu",c:"var(--indigo)",cat:["china"],founded:"2000",hq:"Beijing, China",
+  short:"An early Chinese mover in deep learning, with search, cloud and autonomous driving.",
+  products:"Ernie assistant and API, Baidu Cloud, Apollo autonomous driving",
+  models:"Ernie family",
+  edge:"Long-running investment in autonomous vehicles and in-house accelerator work.",
+  partners:"Domestic automotive and enterprise partners.",
+  strategy:"Combine search, cloud and self-driving into a linked AI business.",
+  race:[2,2,3,3,1,3,1,2],note:"Autonomous driving is among its most developed AI programmes."},
+ {id:"deepseek",n:"DeepSeek",c:"var(--gold)",cat:["china","open","frontier"],founded:"2023",hq:"Hangzhou, China",
+  short:"Small team, open weights, and results that forced a global rethink about training cost.",
+  products:"Chat assistant, API, published model weights",
+  models:"DeepSeek-V3, DeepSeek-R1 reasoning model",
+  edge:"Engineering efficiency — competitive reasoning performance at reported training costs far below assumed norms.",
+  partners:"Backed by the High-Flyer quantitative investment firm.",
+  strategy:"Publish capable open weights and compete on efficiency rather than raw spending.",
+  race:[3,0,0,2,2,0,4,1],note:"Reported training costs are widely discussed but not independently audited."},
+ {id:"mistral",n:"Mistral AI",c:"var(--rubric)",cat:["open","frontier"],founded:"2023",hq:"Paris, France",
+  short:"Europe's most prominent frontier lab, with a strong open-weight track record.",
+  products:"Le Chat assistant, API, on-premise enterprise deployments",
+  models:"Mistral and Mixtral families, including small models for local use",
+  edge:"European data residency, efficient smaller models, and willingness to publish weights.",
+  partners:"European enterprises and public bodies; cloud distribution partners.",
+  strategy:"Serve organisations that need sovereignty, on-premise control or lower-cost models.",
+  race:[3,0,1,2,2,0,4,3],note:"Smaller compute base than US or Chinese peers."}
+];
+
+const RACE_COLS = ["Models","Chips","Cloud","Consumer","Agents","Robotics","Open weights","Enterprise"];
+const RACE_DESC = ["little or no public presence","early or limited","real but partial","strong","deep, established position"];
+const CO_FILTERS = [
+ {id:"all",label:"All organisations"},{id:"frontier",label:"Frontier labs"},
+ {id:"bigtech",label:"Platform companies"},{id:"chips",label:"Chips & infrastructure"},
+ {id:"china",label:"China"},{id:"open",label:"Open weights"}
+];
+
+const LADDER = [
+ {n:"Chatbot",s:"Answers one question at a time"},
+ {n:"Copilot",s:"Suggests inside your existing tool"},
+ {n:"Assistant",s:"Holds context across a conversation"},
+ {n:"Tool-using model",s:"Calls a search, database or API"},
+ {n:"Agent",s:"Plans and executes multiple steps"},
+ {n:"Multi-agent system",s:"Specialists coordinate on parts"},
+ {n:"Autonomous workflow",s:"Runs on a trigger, unattended"}
+];
+const AGENT_PARTS = [
+ {t:"Tools",d:"Functions it can call — search, file access, database queries, a browser, a code interpreter, a payment API. Tools are where an agent's real power and real risk both come from."},
+ {t:"Planning",d:"Breaking a goal into ordered steps, and revising the plan when a step fails or returns something unexpected."},
+ {t:"Memory",d:"Short-term context for the current task, plus longer-term storage of preferences, prior results and documents it can retrieve."},
+ {t:"Verification",d:"Checking its own output — running the tests, re-reading the source, comparing totals — before reporting a result as done."}
+];
+const AGENT_RISKS = [
+ {t:"Compounding errors",d:"A wrong assumption at step two quietly shapes every step after it. Longer chains mean more places for small mistakes to become large ones."},
+ {t:"Prompt injection",d:"An agent that reads web pages or emails can encounter text written to hijack it. Treating retrieved content as instructions is a live and unsolved security problem."},
+ {t:"Over-permissioning",d:"An agent with write access to production systems can do real damage quickly. Scoped credentials and human approval on consequential actions are basic hygiene."},
+ {t:"Unclear accountability",d:"When an autonomous workflow makes a costly decision, responsibility is genuinely ambiguous. Logging and reversibility matter more than they usually get."}
+];
+const LOOP = [
+ {n:"01",t:"Goal",d:"A person states what they want, ideally with constraints and a definition of done."},
+ {n:"02",t:"Plan",d:"The agent decomposes the goal into steps and picks the first one."},
+ {n:"03",t:"Act",d:"It calls a tool: runs a query, opens a page, writes a file, executes code."},
+ {n:"04",t:"Observe",d:"It reads what came back — including errors, empty results and surprises."},
+ {n:"05",t:"Reason",d:"It decides whether the step worked and what the result means for the plan."},
+ {n:"06",t:"Adjust",d:"It revises the plan, retries differently, or asks the person for a decision."},
+ {n:"07",t:"Verify",d:"It checks the finished work against the original goal before declaring success."},
+ {n:"08",t:"Result",d:"It returns the outcome with its reasoning and, ideally, a trace of what it did."}
+];
+
+const TR_CATS = [
+ {id:"all",label:"Everything"},{id:"capability",label:"Capability"},{id:"product",label:"Products"},
+ {id:"physical",label:"Physical world"},{id:"infra",label:"Infrastructure"},{id:"sector",label:"Sectors"}
+];
+const TRENDS = [
+ {t:"AI agents",c:"capability",p:"Moving from answering to doing. The engineering problem is reliability over long chains of actions, not raw intelligence.",o:"Open question: how much autonomy organisations will actually grant without human approval steps."},
+ {t:"Reasoning models",c:"capability",p:"Models that spend more computation thinking before answering, improving maths, code and multi-step logic.",o:"Open question: cost. Deliberation is expensive, and not every query deserves it."},
+ {t:"Multimodal AI",c:"capability",p:"One model handling text, images, audio and video, so you can show a problem rather than describe it.",o:"Open question: video understanding at length remains far harder than single images."},
+ {t:"AI coding",c:"product",p:"The clearest commercial application so far. Tools now read whole repositories, propose changes and run tests.",o:"Open question: review burden. Generated code still needs someone accountable for it."},
+ {t:"Video generation",c:"product",p:"Text-to-video improved rapidly and is entering pre-visualisation, advertising and short-form content.",o:"Open question: precise control, consistency across shots, and rights in training data."},
+ {t:"AI voice",c:"product",p:"Low-latency speech in and out makes spoken conversation with software genuinely usable, including interruption.",o:"Open question: voice cloning consent and detection, which regulation has not caught up with."},
+ {t:"Robotics",c:"physical",p:"General-purpose models applied to manipulation, with simulation filling gaps in scarce real-world data.",o:"Open question: reliability outside controlled environments is still the bottleneck."},
+ {t:"Humanoid robots",c:"physical",p:"Heavily funded on the argument that human-shaped machines fit human-shaped workplaces without redesign.",o:"Open question: whether the humanoid form is efficient, or mainly good at attracting investment."},
+ {t:"Autonomous vehicles",c:"physical",p:"Driverless services operate commercially in a growing number of cities after a long, expensive development period.",o:"Open question: scaling beyond well-mapped, benign-weather metros."},
+ {t:"AI search",c:"product",p:"Answer-first interfaces are displacing lists of links, changing how the open web gets traffic and revenue.",o:"Open question: the economics of publishing when answers no longer send visits."},
+ {t:"AI in the operating system",c:"product",p:"Assistants moving from a website into the OS, with access to files, apps and screen context.",o:"Open question: permissions. An assistant that sees everything is also a large attack surface."},
+ {t:"AI in healthcare",c:"sector",p:"Strong results in imaging, triage, documentation and drug discovery; clinical documentation is the fastest real adoption.",o:"Open question: regulatory approval, liability and evidence from prospective trials rather than retrospective data."},
+ {t:"AI in science",c:"sector",p:"Structure prediction, materials search and literature synthesis are compressing timelines in several fields.",o:"Open question: reproducibility, and whether generated hypotheses survive laboratory testing."},
+ {t:"AI in education",c:"sector",p:"Patient, always-available tutoring is genuinely useful; assessment design is under real strain.",o:"Open question: what to measure when the output can be produced by a machine in seconds."},
+ {t:"AI in finance",c:"sector",p:"Document processing, compliance review, fraud detection and research summarisation are in production at scale.",o:"Open question: explainability requirements for models that cannot fully explain themselves."},
+ {t:"Enterprise AI",c:"sector",p:"Attention has shifted from pilots to measurable deployment: integration, evaluation, security review and cost per task.",o:"Open question: many pilots still fail on data quality and process change, not model capability."},
+ {t:"AI infrastructure",c:"infra",p:"Data centre construction, power agreements, land and cooling have become strategic constraints on AI growth.",o:"Open question: whether demand justifies the build-out, and on what timescale."},
+ {t:"Custom AI chips",c:"infra",p:"Cloud providers designing their own accelerators to cut costs and reduce dependence on a single supplier.",o:"Open question: software ecosystems. Silicon is easier to build than the toolchain around it."},
+ {t:"Energy",c:"infra",p:"AI data centres are large, concentrated electricity consumers, pushing operators towards long-term generation deals.",o:"Open question: grid capacity and local impact, which are political as much as technical."},
+ {t:"Open-weight models",c:"infra",p:"Downloadable models are close enough to closed ones for many tasks, changing pricing and enabling local deployment.",o:"Open question: safety of irreversible releases, which is the crux of the whole debate."},
+ {t:"Small models",c:"capability",p:"Compact models that run on a laptop or phone, cheap enough to use constantly and private by default.",o:"Open question: how much capability can be compressed before the trade-off stops being worth it."},
+ {t:"Edge AI",c:"infra",p:"Inference moving onto devices — phones, cameras, vehicles, industrial sensors — for latency, cost and privacy.",o:"Open question: keeping models updated across fleets of heterogeneous hardware."},
+ {t:"Physical AI",c:"physical",p:"Models that understand physics, space and causality well enough to act in the world rather than describe it.",o:"Open question: data. There is no internet-scale corpus of physical interaction."},
+ {t:"AI and cybersecurity",c:"infra",p:"Used on both sides: faster vulnerability discovery and triage for defenders, cheaper convincing phishing for attackers.",o:"Open question: whether the balance favours attack or defence. Evidence currently points both ways."}
+];
+
+/* --- NEWS ------------------------------------------------------------
+   ARCHIVE MODE. NEWS_SEED contains dated entries about events that are
+   already part of the public record. Nothing here is invented, and it is
+   NOT a live feed.
+
+   >>> INTEGRATION POINT <
+   To make this live, edit loadNews() below. Replace the seed with a fetch
+   to an RSS-to-JSON bridge or your own endpoint and map each item to:
+     { headline, date (ISO), source, url, cat, summary, imp 1-3 }
+   A browser cannot fetch most RSS directly (CORS) — proxy it server-side.
+--------------------------------------------------------------------- */
+const NEWS_CATS = ["ALL","MODELS","RESEARCH","CHIPS","BIG TECH","POLICY","ROBOTICS","BUSINESS","SECURITY"];
+const NEWS_SEED = [
+ {headline:"EU AI Act enters into force",date:"2024-08-01",source:"European Union — Official Journal",url:"https://artificialintelligence-act.eu/",cat:"POLICY",imp:3,
+  summary:"The first comprehensive legal framework for AI takes effect, introducing risk tiers, transparency duties for general-purpose models and phased application dates."},
+ {headline:"'Attention Is All You Need' introduces the Transformer",date:"2017-06-12",source:"arXiv — Vaswani et al., Google",url:"https://arxiv.org/abs/1706.03762",cat:"RESEARCH",imp:3,
+  summary:"A sequence architecture built entirely on attention, removing recurrence. It became the basis for nearly every large model that followed."},
+ {headline:"ChatGPT released as a research preview",date:"2022-11-30",source:"OpenAI — company blog",url:"https://openai.com/blog/chatgpt",cat:"MODELS",imp:3,
+  summary:"A conversational interface to a language model is opened to the public and becomes one of the fastest-adopted consumer software products on record."},
+ {headline:"AlphaFold protein structure database opened",date:"2021-07-22",source:"Nature / EMBL-EBI",url:"https://alphafold.ebi.ac.uk/",cat:"RESEARCH",imp:3,
+  summary:"Predicted structures for a large share of known proteins are made freely available, changing everyday practice in structural biology."},
+ {headline:"AlphaGo defeats Lee Sedol 4–1",date:"2016-03-15",source:"DeepMind / Nature",url:"https://deepmind.google/research/breakthroughs/alphago/",cat:"RESEARCH",imp:3,
+  summary:"A system combining neural networks with self-play and tree search wins a five-game match against a top professional Go player."},
+ {headline:"DeepSeek publishes R1 reasoning model weights",date:"2025-01-20",source:"DeepSeek — model release",url:"https://github.com/deepseek-ai",cat:"MODELS",imp:3,
+  summary:"An openly released reasoning model with competitive results and low reported training cost prompts widespread reassessment of frontier training economics."},
+ {headline:"AlexNet wins ImageNet by a wide margin",date:"2012-09-30",source:"NeurIPS — Krizhevsky, Sutskever, Hinton",url:"https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks",cat:"RESEARCH",imp:3,
+  summary:"A deep convolutional network trained on GPUs cuts image classification error sharply, triggering the industry-wide shift to deep learning."},
+ {headline:"Llama open-weight family released",date:"2023-02-24",source:"Meta AI — research announcement",url:"https://ai.meta.com/blog/large-language-model-llama-meta-ai/",cat:"BIG TECH",imp:3,
+  summary:"Capable model weights are made available to researchers and later to commercial users, seeding a large open-weight ecosystem."},
+ {headline:"NVIDIA completes acquisition of Mellanox",date:"2020-04-27",source:"NVIDIA — investor announcement",url:"https://nvidianews.nvidia.com/",cat:"CHIPS",imp:2,
+  summary:"Adding high-speed interconnect to its GPU business lets NVIDIA sell whole data-centre systems rather than individual accelerators."},
+ {headline:"US executive order on AI signed, later revised",date:"2023-10-30",source:"The White House",url:"https://www.federalregister.gov/",cat:"POLICY",imp:2,
+  summary:"Directs federal agencies on AI safety, security and procurement. Policy in this area has continued to change; check current status before relying on it."},
+ {headline:"IBM Deep Blue beats Garry Kasparov",date:"1997-05-11",source:"IBM Research archive",url:"https://www.ibm.com/history/deep-blue",cat:"RESEARCH",imp:2,
+  summary:"A purpose-built chess machine wins a six-game match against the world champion, the first such result under tournament conditions."},
+ {headline:"UK AI Safety Summit produces Bletchley Declaration",date:"2023-11-01",source:"UK Government",url:"https://www.gov.uk/government/publications/ai-safety-summit-2023-the-bletchley-declaration",cat:"POLICY",imp:2,
+  summary:"Twenty-eight countries and the EU sign a joint statement on frontier AI risk, establishing an international discussion track."}
+];
+
+const PIPE = [
+ {t:"Data",d:"Text, images, code, sensor logs",i:'<path d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3z"/><path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>'},
+ {t:"Training",d:"Weeks of adjusting billions of numbers",i:'<path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/>'},
+ {t:"Accelerators",d:"Thousands of GPUs or TPUs in parallel",i:'<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M10 2v4M14 2v4M10 18v4M14 18v4M2 10h4M2 14h4M18 10h4M18 14h4"/>'},
+ {t:"Model",d:"The trained weights — the artefact itself",i:'<circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 7l3 3M17 7l-3 3M7 17l3-3M17 17l-3-3"/>'},
+ {t:"Inference",d:"Running the model to answer one request",i:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'},
+ {t:"User",d:"An answer, an image, an action taken",i:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>'}
+];
+const CP_FACTS = [
+ {t:"Why GPUs",d:"Neural networks are mostly matrix multiplication. Graphics chips were already built to do thousands of those operations at once, which is why gaming hardware became AI hardware."},
+ {t:"Memory is the real limit",d:"Getting numbers to the arithmetic units is often slower than the arithmetic itself. High-bandwidth memory is scarce, expensive and a genuine bottleneck on production."},
+ {t:"Networking is part of the chip story",d:"Large training runs span thousands of accelerators that must exchange data constantly. Interconnect speed, not raw chip count, frequently determines usable performance."},
+ {t:"Training versus inference",d:"Training is a one-off, enormous cost. Inference is small per request but happens billions of times, so over a model's life it can dominate total spending."},
+ {t:"Power and cooling",d:"A large AI data centre draws power comparable to a small city and produces heat that must be removed continuously. Grid connection queues now shape where AI gets built."},
+ {t:"The software moat",d:"Competitive silicon is necessary but insufficient. Compilers, kernels, libraries and trained engineers take years to build, which is why incumbency in this market is durable."}
+];
+const CP_PLAYERS = [
+ {t:"NVIDIA",d:"Data centre GPUs plus CUDA software and interconnect. The default choice for training, sold increasingly as complete systems."},
+ {t:"Google",d:"TPUs, designed in-house since the mid-2010s and used for Google's own training and inference as well as cloud customers."},
+ {t:"AWS",d:"Trainium for training and Inferentia for inference, aimed at cutting cost per token for Amazon and its customers."},
+ {t:"AMD",d:"Instinct accelerators competing on memory capacity and price, with an open software stack maturing against CUDA."},
+ {t:"Microsoft",d:"In-house accelerator and networking programmes alongside very large purchases of merchant silicon."},
+ {t:"Broadcom & partners",d:"Co-designs custom accelerators for hyperscalers and supplies much of the switching silicon that connects them."},
+ {t:"Intel",d:"Data centre AI accelerators plus a foundry strategy aimed at manufacturing advanced chips outside Asia."},
+ {t:"TSMC (upstream)",d:"Not an AI company, but manufactures most leading-edge AI silicon. Advanced packaging capacity there constrains the entire industry."}
+];
+
+const STACK = [
+ {n:"Energy",s:"power generation, grid, long-term supply deals",c:"var(--rubric)",
+  d:"Everything starts with electricity. Large AI facilities negotiate multi-year power agreements and increasingly locate near generation. Grid connection timelines have become a real constraint on how fast AI capacity can grow."},
+ {n:"Data centres",s:"buildings, cooling, land, water",c:"var(--clay)",
+  d:"Purpose-built halls with dense racks, liquid or air cooling, redundant power and heavy security. Construction takes years, so today's capacity reflects decisions made well before the current demand."},
+ {n:"Chips",s:"GPUs, TPUs, custom accelerators, memory",c:"var(--clay)",
+  d:"The accelerators that do the arithmetic, plus the high-bandwidth memory feeding them. Supply, packaging capacity and export rules at this layer ripple through everything above."},
+ {n:"Networking",s:"interconnect, switching, fabrics",c:"var(--gold)",
+  d:"Thousands of chips working on one training run must exchange gradients constantly. The network fabric determines how much of the theoretical compute is actually usable."},
+ {n:"Cloud",s:"capacity, orchestration, billing",c:"var(--gold)",
+  d:"Turns physical infrastructure into rentable capacity with scheduling, storage and security. Almost no one outside a handful of companies owns the hardware they train on."},
+ {n:"Foundation models",s:"pre-training and post-training",c:"var(--gold-deep)",
+  d:"Where the expensive training runs happen and where safety tuning, instruction following and evaluation are applied. The output is a set of weights — the artefact everything above depends on."},
+ {n:"AI platforms",s:"APIs, fine-tuning, retrieval, evaluation",c:"var(--gold-deep)",
+  d:"The developer layer: serving models efficiently, connecting them to private data, measuring quality, controlling cost and enforcing policy."},
+ {n:"Agents",s:"planning, tools, memory, verification",c:"var(--indigo)",
+  d:"Wraps models in loops that pursue goals across multiple steps and systems. Currently the least mature and most rapidly changing layer of the stack."},
+ {n:"Applications",s:"products people actually open",c:"var(--indigo)",
+  d:"Assistants, coding tools, search, design software, clinical documentation, customer support. Most economic value is captured or lost here rather than at the model layer."},
+ {n:"Users",s:"people, organisations, machines",c:"var(--text)",
+  d:"The top of the stack, and the part most often skipped in planning. Adoption depends on trust, workflow fit and whether the output can be checked — not on benchmark scores."}
+];
+
+const MONEY = [
+ {l:"Data centres & land",v:96},{l:"Chips & hardware",v:92},{l:"Energy contracts",v:64},
+ {l:"Model training",v:58},{l:"Talent",v:46},{l:"Applications & startups",v:40},{l:"Safety & evaluation",v:14}
+];
+const EC_CARDS = [
+ {t:"Capital expenditure leads",d:"The largest technology firms have raised infrastructure spending sharply, and much of it is AI-related. This is the most visible and most verifiable part of the AI economy — it appears in quarterly filings."},
+ {t:"Revenue follows unevenly",d:"Cloud AI services and coding tools show clear paid demand. Consumer subscriptions are growing. Whether revenue justifies the build-out on the current timeline is the central open financial question."},
+ {t:"Costs are falling per unit",d:"The price of a given level of capability has dropped steeply, driven by efficiency work, smaller models and competition. Falling unit costs and rising total spending are happening simultaneously."}
+];
+
+const JOBS = [
+ {t:"Routine data entry & transcription",p:8,d:"Highly repetitive, verifiable, low-stakes — the clearest case for automation."},
+ {t:"Basic content production",p:20,d:"First drafts of routine copy are largely machine-generated; editing and judgement stay human."},
+ {t:"Tier-one customer support",p:26,d:"Common questions get resolved automatically; complex and emotional cases escalate to people."},
+ {t:"Translation & localisation",p:32,d:"Machine-first with human review, especially where nuance or liability matters."},
+ {t:"Software development",p:52,d:"Code generation is fast and improving, but architecture, review and accountability remain human work. Volume of code written is rising, not falling."},
+ {t:"Graphic & visual design",p:55,d:"Generation handles variation and iteration; direction, taste and client judgement do not transfer."},
+ {t:"Legal & professional services",p:64,d:"Document review and drafting accelerate sharply; advice, strategy and liability stay with the professional."},
+ {t:"Medicine & diagnostics",p:74,d:"Strong support in imaging and documentation, inside a regulated system that keeps a clinician responsible."},
+ {t:"Teaching",p:80,d:"Tutoring and materials get powerful assistance; the relational and motivational core is not automatable."},
+ {t:"Skilled trades & care work",p:94,d:"Physical, unpredictable, human-facing. Least exposed of all — and increasingly scarce."}
+];
+const JOB_NOTES = [
+ {t:"What gets automated",d:"Tasks that are repetitive, well-documented, easy to verify and low-consequence when wrong. Note that this describes tasks, not occupations — very few jobs are only these."},
+ {t:"What gets more valuable",d:"Judgement under ambiguity, responsibility for outcomes, physical skill, relationships, taste, and the ability to check machine output rather than accept it."},
+ {t:"What is genuinely new",d:"Evaluation and testing of AI systems, data and retrieval engineering, AI security, model operations, and domain specialists who can specify what good output looks like."}
+];
+
+const RISKS = [
+ {t:"Hallucination",c:"var(--rubric)",d:"Models generate fluent, plausible text that can be simply false, with no internal signal distinguishing the two. Mitigations — retrieval, citation, verification steps — reduce the rate but do not eliminate it."},
+ {t:"Misinformation at scale",c:"var(--rubric)",d:"Persuasive content can be produced cheaply in any language and volume. The bottleneck on influence operations was never ideas; it was labour."},
+ {t:"Deepfakes",c:"var(--rubric)",d:"Convincing synthetic video and voice are now cheap. Provenance standards and watermarking help but are inconsistently adopted and easily stripped."},
+ {t:"Privacy",c:"var(--clay)",d:"Training corpora contain personal information, and assistants with device or inbox access see a great deal more. Data minimisation and clear retention rules matter more than model choice."},
+ {t:"Copyright and consent",c:"var(--clay)",d:"Whether training on copyrighted work is permitted is being litigated in several jurisdictions with different answers emerging. Licensing markets are forming in parallel."},
+ {t:"Bias",c:"var(--clay)",d:"Models reflect patterns in their training data, including historical discrimination. In hiring, lending and policing this produces measurable unfairness that requires auditing, not assurances."},
+ {t:"Cybersecurity",c:"var(--indigo)",d:"AI lowers the cost of convincing phishing and speeds vulnerability discovery. It also helps defenders triage faster. The net balance is contested and probably domain-specific."},
+ {t:"Autonomous systems",c:"var(--indigo)",d:"Agents acting without review can cause real damage before anyone notices. Scoped permissions, logging, reversibility and human approval on consequential actions are the practical answers."},
+ {t:"Labour disruption",c:"var(--indigo)",d:"Even where jobs are augmented rather than replaced, transitions are uneven. The cost falls on specific people and regions, not on averages."},
+ {t:"Concentration of power",c:"var(--gold-deep)",d:"Frontier training requires capital few organisations have. Open weights push the other way, which is precisely why the open-versus-closed argument is so heated."},
+ {t:"Misuse",c:"var(--gold-deep)",d:"Capable models can assist harmful activity. Labs apply refusal training, monitoring and staged release; open weights make some of these mitigations removable."},
+ {t:"Energy and water",c:"var(--gold-deep)",d:"Large facilities consume significant electricity and cooling water, with local impact. Efficiency per unit of computation is improving while total consumption still rises."},
+ {t:"Safety research",c:"var(--verdigris)",d:"Interpretability, evaluation and alignment aim to understand and constrain systems whose internals nobody fully explains. The field is small relative to capability work."},
+ {t:"Governance",c:"var(--verdigris)",d:"Rules are arriving unevenly across jurisdictions — comprehensive in the EU, sectoral in the US, developmental elsewhere. Compliance is now a real engineering constraint."}
+];
+
+const REGIONS = [
+ {id:"us",n:"United States",x:20,y:48,s:"30px",short:"US",flag:"🇺🇸",
+  d:"The centre of frontier model development and AI capital. Home to most leading labs, the dominant accelerator designer and the largest cloud providers.",
+  pts:[["Research","Leading labs and universities, heavily funded by private capital"],["Chips","Designs the leading accelerators; manufacturing largely offshore"],["Regulation","Sectoral and state-level rather than comprehensive; changes with administrations"],["Constraint","Power, grid connection and skilled construction capacity"]]},
+ {id:"cn",n:"China",x:76,y:44,s:"28px",short:"China",flag:"🇨🇳",
+  d:"A large, fast-moving ecosystem with major platform companies, strong open-weight publishing and a national push toward domestic silicon.",
+  pts:[["Research","High publication volume and rapid model release cycles"],["Chips","Significant domestic investment under export restrictions"],["Regulation","Established rules on generative content and algorithms"],["Constraint","Access to leading-edge manufacturing and equipment"]]},
+ {id:"eu",n:"European Union",x:51,y:33,s:"24px",short:"EU",flag:"🇪🇺",
+  d:"Regulatory leadership through the AI Act, a strong research base, and a smaller commercial frontier presence than the US or China.",
+  pts:[["Research","Deep academic strength; some leading labs and startups"],["Chips","Critical upstream position in lithography equipment"],["Regulation","First comprehensive AI law, in force since August 2024"],["Constraint","Scale of capital and compute relative to US peers"]]},
+ {id:"uk",n:"United Kingdom",x:42,y:20,s:"18px",short:"UK",flag:"🇬🇧",
+  d:"Outsized research heritage, a national AI safety institute, and a lighter-touch regulatory posture than the EU.",
+  pts:[["Research","Long history in deep learning; major lab presence in London"],["Chips","Notable processor architecture design"],["Regulation","Principles-based and sector-led rather than a single statute"],["Constraint","Retaining talent and companies as they scale"]]},
+ {id:"jp",n:"Japan",x:91,y:22,s:"18px",short:"Japan",flag:"🇯🇵",
+  d:"Strong in robotics, materials and semiconductor equipment, with a permissive stance on text and data mining for training.",
+  pts:[["Research","Robotics and applied industrial AI"],["Chips","Key supplier of materials and manufacturing equipment"],["Regulation","Relatively permissive copyright position on training"],["Constraint","Smaller domestic frontier model effort"]]},
+ {id:"kr",n:"South Korea",x:85,y:33,s:"17px",short:"Korea",flag:"🇰🇷",
+  d:"Central to the memory supply chain that AI accelerators depend on, with large domestic technology groups building models.",
+  pts:[["Research","Corporate research labs and national programmes"],["Chips","Leading position in high-bandwidth memory"],["Regulation","Developing framework legislation"],["Constraint","Competition from larger AI ecosystems"]]},
+ {id:"in",n:"India",x:68,y:56,s:"22px",short:"India",flag:"🇮🇳",
+  d:"Enormous engineering talent pool, fast consumer adoption, and public investment in shared compute and language models.",
+  pts:[["Research","Large developer base; growing model work in Indian languages"],["Chips","Emerging assembly and packaging investment"],["Regulation","Advisory and evolving rather than comprehensive"],["Constraint","Domestic compute capacity"]]},
+ {id:"ae",n:"UAE & Gulf",x:58,y:62,s:"19px",short:"UAE",flag:"🇦🇪",
+  d:"Using energy wealth and cheap power to build data centre capacity and fund AI programmes, positioning as neutral infrastructure.",
+  pts:[["Research","State-backed institutes and open-weight model releases"],["Chips","Large procurement subject to export considerations"],["Regulation","Investment-friendly, actively developing"],["Constraint","Talent depth and geopolitical balancing"]]}
+];
+
+const FUTURE = [
+ {t:"Agents that are actually reliable",d:"The gap between an impressive demo and a system you would trust unattended is where most engineering effort now goes. Expect narrow, well-scoped agents in production long before general ones."},
+ {t:"AI-native software",d:"Applications designed around a model from the start rather than retrofitted, where the interface is intent rather than menus. Most current products are still retrofits."},
+ {t:"Robotics catching up",d:"General-purpose models plus better simulation may finally give robots the ability to handle unfamiliar situations. Physical data scarcity remains the hard problem."},
+ {t:"Scientific acceleration",d:"AI as a routine instrument in biology, materials and chemistry — proposing candidates that laboratories then test. The bottleneck moves to experiments, not ideas."},
+ {t:"Personal models",d:"Assistants that hold long-term context about you and run partly on your own device. This depends as much on privacy engineering and regulation as on capability."},
+ {t:"AI hardware beyond the phone",d:"Glasses, earpieces and ambient devices as interfaces for assistants. Several attempts have already failed; the form factor question is genuinely unsettled."},
+ {t:"Efficiency over size",d:"If capability per unit of compute keeps improving, the frontier may be defined by cost-effectiveness rather than parameter count — which would reshape competition."},
+ {t:"Regulatory consolidation",d:"Divergent regimes create compliance burden. Some convergence on evaluation standards and incident reporting is plausible; full harmonisation is not."},
+ {t:"Human–AI collaboration norms",d:"Professions will develop conventions about disclosure, review and accountability, much as they did for spreadsheets, calculators and search."},
+ {t:"An adoption plateau",d:"Also plausible: capability keeps improving while deployment stalls on integration, trust, cost and organisational change. This has happened with previous technologies."},
+ {t:"Something unanticipated",d:"The field's record on forecasting is poor in both directions. The most likely surprise is one not on any current list, including this one."}
+];
+
+const DOCS = {
+ about:{t:"About this page",b:`<p>An independent, self-contained explainer about artificial intelligence: what it is, how it works, who builds it and what remains genuinely uncertain. It is one HTML file with no backend, no tracking and no external data calls.</p><p>It is written for someone starting from zero, but tries not to condescend to readers who aren't. Where the field disagrees, the page says so rather than picking a side.</p><p>It is an educational demonstration, not a news service, an investment research product or professional advice.</p>`},
+ sources:{t:"Sources",b:`<p>Historical and technical claims here follow the public record: published research papers, official company announcements, and reporting from established outlets. For anything current, go to primary sources directly:</p>
+  <ul style="color:var(--muted);padding-left:1.1rem;line-height:1.9">
+  <li><strong>Stanford AI Index</strong> — the most useful annual statistical overview of the field</li>
+  <li><strong>arXiv</strong> — preprints, including most significant architecture papers</li>
+  <li><strong>Company research blogs and model cards</strong> — for capability and release claims</li>
+  <li><strong>Company filings</strong> — for spending and revenue, rather than press coverage of them</li>
+  <li><strong>Reuters, AP, Financial Times, Bloomberg</strong> — for business and market reporting</li>
+  <li><strong>MIT Technology Review, The Verge</strong> — for technology reporting and context</li>
+  <li><strong>Official government and regulator publications</strong> — for law and policy, which changes fast</li></ul>
+  <p style="color:var(--gold)">Check the publication date on anything you cite. In this field, an eighteen-month-old article about capability or market position is usually wrong.</p>`},
+ method:{t:"Methodology",b:`<p>Every claim on this page falls into one of four categories, labelled where it appears:</p>
+  <p><span class="tag fact">FACT</span> Verifiable in the public record — dates, founding years, headquarters, published papers, laws in force.</p>
+  <p><span class="tag analysis">ANALYSIS</span> Editorial judgement based on public information. The competition matrix and the jobs spectrum are analysis. Reasonable people would place some of these differently.</p>
+  <p><span class="tag estimate">ESTIMATE</span> Approximate figures where exact ones are private or contested.</p>
+  <p><span class="tag forecast">FORECAST</span> Speculation about the future, confined to the final section.</p>
+  <p><strong>What this page deliberately does not do:</strong> invent statistics, market shares, funding amounts or news stories; rank models by capability; or present a single answer to who is "winning". Where a number could not be verified, it was left out rather than estimated into existence.</p>
+  <p>The competition matrix scores presence and depth per layer on a four-point scale. It is not market share, revenue or quality — it is an assessment of whether a company has a serious, sustained position in that layer.</p>`},
+ privacy:{t:"Privacy",b:`<p>This page collects nothing. There is no analytics, no cookies, no login and no backend. Nothing you type into the search box leaves your browser. The only thing stored locally is your dark or light theme choice.</p><p>Fonts are requested from Google Fonts; if that matters to you, download the families and reference them locally. Every other asset is inline.</p>`}
+};
+
+/* ================== RENDER ================== */
+
+/* -- concepts -- */
+$("#conceptGrid").innerHTML = CONCEPTS.map((c,i)=>`
+ <button class="concept" aria-expanded="false" id="cn-${i}" data-search-title="${esc(c.t)}">
+   <h3>${esc(c.t)}<span class="plus" aria-hidden="true"></span></h3>
+   <div class="one">${esc(c.one)}</div>
+   <div class="more"><div><p>${esc(c.d)}</p><div class="ex">For example: ${esc(c.ex)}</div></div></div>
+ </button>`).join("");
+$("#conceptGrid").addEventListener("click",e=>{
+  const b = e.target.closest(".concept"); if(!b) return;
+  b.setAttribute("aria-expanded", String(b.getAttribute("aria-expanded")!=="true"));
+});
+
+/* -- hierarchy -- */
+$("#hier").innerHTML = HIER.map(h=>
+ `<div class="hier-step" style="--c:${h.c}"><b>${esc(h.n)}</b><span>${esc(h.s)}</span></div>`).join("");
+
+/* -- timeline -- */
+const rail = $("#tlRail"), tlPanel = $("#tlPanel");
+rail.innerHTML = TIMELINE.map((e,i)=>`
+ <button class="tl-item" role="option" aria-selected="${i===0}" data-i="${i}" tabindex="-1"
+   data-search-title="${esc(e.y+" — "+e.t)}">
+   <span class="y">${esc(e.y)}</span><span class="t">${esc(e.t)}</span></button>`).join("");
+function showEvent(i){
+  const e = TIMELINE[i];
+  $$(".tl-item",rail).forEach(b=>b.setAttribute("aria-selected",String(+b.dataset.i===i)));
+  tlPanel.innerHTML = `<div class="fade-swap">
+    <div class="yr">${esc(e.y)}</div><h3>${esc(e.t)}</h3>
+    <dl style="margin:0">
+      <dt>WHAT HAPPENED</dt><dd>${esc(e.why)}</dd>
+      <dt>WHO</dt><dd>${esc(e.who)}</dd>
+      <dt>WHY IT MATTERED</dt><dd>${esc(e.imp)}</dd>
+    </dl>
+    ${e.tag?`<p style="margin-top:1.1rem"><span class="tag estimate">${esc(e.tag)}</span></p>`:
+      `<p style="margin-top:1.1rem"><span class="tag fact">PUBLIC RECORD</span></p>`}</div>`;
+}
+rail.addEventListener("click",ev=>{
+  const b = ev.target.closest(".tl-item"); if(b) showEvent(+b.dataset.i);
+});
+rail.addEventListener("keydown",ev=>{
+  const items = $$(".tl-item",rail);
+  const cur = items.findIndex(b=>b.getAttribute("aria-selected")==="true");
+  let n = null;
+  if(ev.key==="ArrowDown"||ev.key==="ArrowRight") n = Math.min(items.length-1,cur+1);
+  if(ev.key==="ArrowUp"||ev.key==="ArrowLeft") n = Math.max(0,cur-1);
+  if(ev.key==="Home") n = 0;
+  if(ev.key==="End") n = items.length-1;
+  if(n!==null){ ev.preventDefault(); showEvent(n); items[n].scrollIntoView({block:"nearest"}); }
+});
+showEvent(0);
+
+/* -- convergence -- */
+$("#converge").innerHTML = FORCES.map(f=>`
+ <div class="force" style="--c:${f.c}"><div class="k">${f.k}</div><h3>${esc(f.t)}</h3>
+ <p>${esc(f.p)}</p><div class="meter"><i data-w="${f.v}"></i></div></div>`).join("");
+
+/* -- model landscape -- */
+$("#modelList").innerHTML = MODEL_TYPES.map(m=>`
+ <div class="mrow" data-search-title="${esc(m.t)}">
+   <div><h3>${esc(m.t)}</h3><div class="kind">${esc(m.k)}</div></div>
+   <div><p>${esc(m.p)}</p><div class="fam">${m.f.map(x=>`<span>${esc(x)}</span>`).join("")}</div></div>
+ </div>`).join("");
+
+/* -- companies -- */
+const coGrid = $("#coGrid");
+$("#coFilters").innerHTML = CO_FILTERS.map((f,i)=>
+ `<button class="chip" data-f="${f.id}" aria-pressed="${i===0}">${esc(f.label)}</button>`).join("");
+function initials(n){return n.replace(/[^A-Za-z ]/g,"").split(" ").filter(Boolean).slice(0,2).map(w=>w[0]).join("");}
+function renderCompanies(filter="all"){
+  const list = COMPANIES.filter(c=>filter==="all"||c.cat.includes(filter));
+  coGrid.innerHTML = list.map(c=>`
+    <button class="card co" data-id="${c.id}" data-search-title="${esc(c.n)}">
+      <div class="co-top">
+        <span class="logo" style="--c:${c.c}" aria-hidden="true">${esc(initials(c.n))}</span>
+        <div><h3>${esc(c.n)}</h3><div class="hq">${esc(c.hq)} · founded ${esc(c.founded)}</div></div>
+      </div>
+      <p>${esc(c.short)}</p>
+      <div class="foot">${c.cat.map(k=>`<span class="tag">${esc((CO_FILTERS.find(f=>f.id===k)||{label:k}).label)}</span>`).join("")}</div>
+      <span class="open">Full profile →</span>
+    </button>`).join("");
+  $("#coEmpty").style.display = list.length ? "none":"block";
+}
+renderCompanies();
+$("#coFilters").addEventListener("click",e=>{
+  const b = e.target.closest(".chip"); if(!b) return;
+  $$("#coFilters .chip").forEach(c=>c.setAttribute("aria-pressed",String(c===b)));
+  renderCompanies(b.dataset.f);
+});
+
+/* -- race matrix -- */
+const raceTable = $("#raceTable");
+$("#raceFilters").innerHTML = CO_FILTERS.map((f,i)=>
+ `<button class="chip" data-f="${f.id}" aria-pressed="${i===0}">${esc(f.label)}</button>`).join("");
+function renderRace(filter="all"){
+  const list = COMPANIES.filter(c=>filter==="all"||c.cat.includes(filter));
+  raceTable.innerHTML = `
+   <caption class="mono" style="text-align:left;padding:.9rem 1rem;color:var(--dim);caption-side:top">
+     Editorial assessment of presence and depth per layer — not market share, not revenue, not a ranking</caption>
+   <thead><tr><th scope="col">Organisation</th>${RACE_COLS.map(c=>`<th scope="col">${esc(c.toUpperCase())}</th>`).join("")}</tr></thead>
+   <tbody>${list.map(c=>`<tr>
+     <th scope="row"><span style="color:${c.c}">●</span> ${esc(c.n)}</th>
+     ${c.race.map((v,i)=>`<td><span class="dots" style="--c:${c.c}" tabindex="0" role="img"
+        aria-label="${esc(c.n+", "+RACE_COLS[i]+": "+RACE_DESC[v])}"
+        data-tip="${esc(c.n+" · "+RACE_COLS[i]+" — "+RACE_DESC[v]+". "+c.note)}">
+        ${[0,1,2,3].map(d=>`<i class="${d<v?"on":""}"></i>`).join("")}</span></td>`).join("")}
+   </tr>`).join("")}</tbody>`;
+}
+renderRace();
+$("#raceFilters").addEventListener("click",e=>{
+  const b = e.target.closest(".chip"); if(!b) return;
+  $$("#raceFilters .chip").forEach(c=>c.setAttribute("aria-pressed",String(c===b)));
+  renderRace(b.dataset.f);
+});
+
+/* -- tooltip -- */
+const tip = $("#tip");
+function showTip(el){
+  const t = el.dataset.tip; if(!t) return;
+  tip.textContent = t; tip.classList.add("show");
+  const r = el.getBoundingClientRect();
+  const w = Math.min(260, innerWidth-24);
+  tip.style.left = Math.max(12, Math.min(innerWidth-w-12, r.left+r.width/2-w/2))+"px";
+  tip.style.top = (r.top>140 ? r.top-tip.offsetHeight-10 : r.bottom+10)+"px";
+}
+function hideTip(){ tip.classList.remove("show"); }
+document.addEventListener("mouseover",e=>{ const d=e.target.closest("[data-tip]"); d?showTip(d):hideTip(); });
+document.addEventListener("focusin",e=>{ const d=e.target.closest("[data-tip]"); if(d) showTip(d); });
+document.addEventListener("focusout",hideTip);
+addEventListener("scroll",hideTip,{passive:true});
+
+/* -- agents -- */
+$("#ladder").innerHTML = LADDER.map(l=>`<div class="rung"><b>${esc(l.n)}</b><span>${esc(l.s)}</span></div>`).join("");
+const smallCards = arr => arr.map(x=>`<div class="card" style="padding:1rem 1.15rem">
+  <b style="font-family:var(--serif);font-weight:600;letter-spacing:-.02em">${esc(x.t)}</b>
+  <p style="color:var(--muted);font-size:.88rem;margin:.3rem 0 0">${esc(x.d)}</p></div>`).join("");
+$("#agentParts").innerHTML = smallCards(AGENT_PARTS);
+$("#agentRisks").innerHTML = smallCards(AGENT_RISKS);
+$("#loop").innerHTML = LOOP.map(n=>`<div class="node"><div class="n">${esc(n.n)}</div><b>${esc(n.t)}</b><p>${esc(n.d)}</p></div>`).join("");
+
+/* -- trends -- */
+$("#trFilters").innerHTML = TR_CATS.map((c,i)=>
+ `<button class="chip" data-f="${c.id}" aria-pressed="${i===0}">${esc(c.label)}</button>`).join("");
+function renderTrends(f="all"){
+  const list = TRENDS.filter(t=>f==="all"||t.c===f);
+  $("#trGrid").innerHTML = list.map(t=>`
+    <button class="concept" aria-expanded="false" data-search-title="${esc(t.t)}">
+      <h3>${esc(t.t)}<span class="plus" aria-hidden="true"></span></h3>
+      <div class="one">${esc(t.p)}</div>
+      <div class="more"><div><p>${esc(t.o)}</p></div></div>
+    </button>`).join("");
+}
+renderTrends();
+$("#trFilters").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  $$("#trFilters .chip").forEach(c=>c.setAttribute("aria-pressed",String(c===b)));
+  renderTrends(b.dataset.f);
+});
+$("#trGrid").addEventListener("click",e=>{
+  const b=e.target.closest(".concept"); if(!b) return;
+  b.setAttribute("aria-expanded", String(b.getAttribute("aria-expanded")!=="true"));
+});
+
+/* -- news -- */
+const CAT_COLOR = {MODELS:"var(--gold)",RESEARCH:"var(--indigo)",CHIPS:"var(--gold-deep)",
+  "BIG TECH":"var(--clay)",POLICY:"var(--rubric)",ROBOTICS:"var(--verdigris)",
+  BUSINESS:"var(--clay)",SECURITY:"var(--rubric)",BREAKING:"var(--rubric)"};
+let NEWS = [];
+/* >>> INTEGRATION POINT: replace the seed assignment with a real fetch <
+   async function loadNews(){
+     const r = await fetch('/api/ai-news');            // your endpoint or RSS-to-JSON proxy
+     const d = await r.json();
+     NEWS = d.items.map(i => ({headline:i.title, date:i.pubDate, source:i.source,
+                               url:i.link, cat:i.category, imp:i.importance||2, summary:i.description}));
+     renderNews(currentNewsFilter);
+   }
+   Browsers cannot fetch most RSS feeds directly because of CORS — proxy server-side. */
+function loadNews(){ NEWS = NEWS_SEED.slice().sort((a,b)=> b.date.localeCompare(a.date)); }
+loadNews();
+let currentNewsFilter = "ALL";
+$("#nwFilters").innerHTML = NEWS_CATS.map((c,i)=>
+ `<button class="chip" data-f="${c}" aria-pressed="${i===0}">${esc(c==="ALL"?"All stories":c)}</button>`).join("");
+function fmtDate(iso){
+  const d = new Date(iso+"T00:00:00");
+  return d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+}
+function renderNews(f="ALL"){
+  currentNewsFilter = f;
+  const list = NEWS.filter(n=>f==="ALL"||n.cat===f);
+  $("#nwGrid").innerHTML = list.map(n=>`
+    <article class="card news" data-search-title="${esc(n.headline)}">
+      <div class="meta">
+        <span class="cat" style="color:${CAT_COLOR[n.cat]||"var(--muted)"}">${esc(n.cat)}</span>
+        <span>${esc(fmtDate(n.date))}</span>
+        <span class="imp" aria-label="Importance ${n.imp} of 3">
+          ${[1,2,3].map(i=>`<i class="${i<=n.imp?"on":""}"></i>`).join("")}</span>
+      </div>
+      <h3>${esc(n.headline)}</h3>
+      <p>${esc(n.summary)}</p>
+      <a class="src-link" href="${esc(n.url)}" target="_blank" rel="noopener noreferrer">${esc(n.source)} ↗</a>
+    </article>`).join("");
+  $("#nwEmpty").style.display = list.length?"none":"block";
+}
+renderNews();
+$("#nwFilters").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  $$("#nwFilters .chip").forEach(c=>c.setAttribute("aria-pressed",String(c===b)));
+  renderNews(b.dataset.f);
+});
+
+/* -- compute -- */
+$("#pipe").innerHTML = PIPE.map(p=>`<div class="pipe-step">
+  <svg class="ico" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p.i}</svg>
+  <b>${esc(p.t)}</b><span>${esc(p.d)}</span></div>`).join("");
+$("#cpFacts").innerHTML = smallCards(CP_FACTS);
+$("#cpPlayers").innerHTML = smallCards(CP_PLAYERS);
+
+/* -- stack -- */
+$("#stackList").innerHTML = STACK.map((l,i)=>`
+ <div>
+   <button class="layer" style="--c:${l.c}" aria-expanded="false" aria-controls="lb-${i}" data-search-title="${esc(l.n)}">
+     <span class="lv">${String(STACK.length-i).padStart(2,"0")}</span>
+     <span><b>${esc(l.n)}</b><span class="sm">${esc(l.s)}</span></span>
+     <span class="plus" aria-hidden="true"></span>
+   </button>
+   <div class="layer-body" id="lb-${i}"><div><p>${esc(l.d)}</p></div></div>
+ </div>`).join("");
+$("#stackList").addEventListener("click",e=>{
+  const b = e.target.closest(".layer"); if(!b) return;
+  const open = b.getAttribute("aria-expanded")==="true";
+  b.setAttribute("aria-expanded",String(!open));
+  document.getElementById(b.getAttribute("aria-controls")).classList.toggle("open",!open);
+});
+
+/* -- economy -- */
+$("#moneyBars").innerHTML = MONEY.map(m=>`
+ <div class="bar-row"><span>${esc(m.l)}</span>
+   <span class="bar-track"><span class="bar-fill" data-w="${m.v}"></span></span>
+   <span class="v">${m.v>=80?"very high":m.v>=50?"high":m.v>=30?"moderate":"lower"}</span></div>`).join("");
+$("#ecCards").innerHTML = EC_CARDS.map(c=>`<div class="card"><h3 style="font-size:1.05rem">${esc(c.t)}</h3>
+  <p style="color:var(--muted);font-size:.9rem;margin:.4rem 0 0">${esc(c.d)}</p></div>`).join("");
+
+/* -- jobs -- */
+$("#jobList").innerHTML = JOBS.map(j=>`
+ <div class="job"><div><b>${esc(j.t)}</b><br><span>${esc(j.d)}</span></div>
+ <div class="pos"><i data-p="${j.p}" style="left:0"></i></div></div>`).join("");
+$("#jobNotes").innerHTML = JOB_NOTES.map(n=>`<div class="card"><h3 style="font-size:1.05rem">${esc(n.t)}</h3>
+  <p style="color:var(--muted);font-size:.9rem;margin:.4rem 0 0">${esc(n.d)}</p></div>`).join("");
+
+/* -- risks -- */
+$("#riskList").innerHTML = RISKS.map(r=>`<div class="risk" style="--c:${r.c}" data-search-title="${esc(r.t)}">
+  <h3>${esc(r.t)}</h3><p>${esc(r.d)}</p></div>`).join("");
+
+/* -- geopolitics -- */
+const map = $("#map");
+map.insertAdjacentHTML("afterbegin", REGIONS.map(r=>`
+ <button class="pin" style="left:${r.x}%;top:${r.y}%;--s:${r.s}" data-id="${r.id}" aria-pressed="false"
+   data-search-title="${esc(r.n)}"><i aria-hidden="true"></i><b>${r.flag} ${esc(r.short)}</b></button>`).join(""));
+function showRegion(id){
+  const r = REGIONS.find(x=>x.id===id) || REGIONS[0];
+  $$(".pin",map).forEach(p=>p.setAttribute("aria-pressed",String(p.dataset.id===r.id)));
+  $("#geoPanel").innerHTML = `<div class="fade-swap">
+    <div style="font-size:2rem;line-height:1">${r.flag}</div>
+    <h3 style="font-size:1.4rem;margin:.4rem 0 .6rem">${esc(r.n)}</h3>
+    <p style="color:var(--muted);font-size:.94rem">${esc(r.d)}</p>
+    <dl style="margin:1rem 0 0">${r.pts.map(([k,v])=>
+      `<div class="kv"><dt>${esc(k.toUpperCase())}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+    <p style="margin-top:1rem"><span class="tag analysis">ANALYSIS</span></p></div>`;
+}
+map.addEventListener("click",e=>{ const p=e.target.closest(".pin"); if(p) showRegion(p.dataset.id); });
+showRegion("us");
+
+/* -- future -- */
+$("#futureGrid").innerHTML = FUTURE.map(f=>`<div class="card" data-search-title="${esc(f.t)}">
+  <span class="tag forecast">FORECAST</span>
+  <h3 style="font-size:1.08rem;margin:.6rem 0 .35rem">${esc(f.t)}</h3>
+  <p style="color:var(--muted);font-size:.9rem;margin:0">${esc(f.d)}</p></div>`).join("");
+
+/* ================== MODAL ================== */
+const shade = $("#modalShade");
+let lastFocus = null;
+function openModal({title,sub,logo,body}){
+  lastFocus = document.activeElement;
+  $("#modalTitle").textContent = title;
+  $("#modalSub").textContent = sub||"";
+  $("#modalLogo").innerHTML = logo||"";
+  $("#modalBody").innerHTML = body;
+  shade.classList.add("open");
+  document.body.style.overflow = "hidden";
+  $("#modalClose").focus();
+}
+function closeModal(){
+  shade.classList.remove("open");
+  document.body.style.overflow = "";
+  if(lastFocus) lastFocus.focus();
+}
+$("#modalClose").addEventListener("click",closeModal);
+shade.addEventListener("click",e=>{ if(e.target===shade) closeModal(); });
+
+function openCompany(id){
+  const c = COMPANIES.find(x=>x.id===id); if(!c) return;
+  openModal({
+    title:c.n, sub:`${c.hq} · founded ${c.founded}`,
+    logo:`<span class="logo" style="--c:${c.c};width:52px;height:52px;font-size:1.15rem">${esc(initials(c.n))}</span>`,
+    body:`<p style="color:var(--muted);margin-top:0">${esc(c.short)}</p>
+      <dl style="margin:1.2rem 0 0">
+        <div class="kv"><dt>MAIN PRODUCTS</dt><dd>${esc(c.products)}</dd></div>
+        <div class="kv"><dt>MODEL FAMILIES</dt><dd>${esc(c.models)}</dd></div>
+        <div class="kv"><dt>COMPETITIVE EDGE</dt><dd>${esc(c.edge)}</dd></div>
+        <div class="kv"><dt>PARTNERSHIPS</dt><dd>${esc(c.partners)}</dd></div>
+        <div class="kv"><dt>STRATEGIC DIRECTION</dt><dd>${esc(c.strategy)}</dd></div>
+      </dl>
+      <h4 style="font-size:.74rem;letter-spacing:.04em;color:var(--gold-deep);
+        margin:1.6rem 0 .7rem;font-weight:600;font-family:var(--sans)">POSITION BY LAYER</h4>
+      <div style="display:grid;gap:.5rem">
+        ${c.race.map((v,i)=>`<div style="display:grid;grid-template-columns:130px 1fr auto;gap:.7rem;align-items:center;font-size:.86rem">
+          <span style="color:var(--muted)">${esc(RACE_COLS[i])}</span>
+          <span class="dots" style="--c:${c.c}">${[0,1,2,3].map(d=>`<i class="${d<v?"on":""}"></i>`).join("")}</span>
+          <span style="color:var(--dim);font-size:.78rem">${esc(RACE_DESC[v])}</span></div>`).join("")}
+      </div>
+      <p style="margin-top:1.2rem;color:var(--dim);font-size:.84rem">${esc(c.note)}</p>
+      <p style="margin-top:.8rem"><span class="tag fact">FOUNDING &amp; LOCATION: PUBLIC RECORD</span>
+        <span class="tag analysis">POSITIONS &amp; STRATEGY: ANALYSIS</span></p>`
+  });
+}
+coGrid.addEventListener("click",e=>{ const b=e.target.closest(".co"); if(b) openCompany(b.dataset.id); });
+$$("[data-doc]").forEach(b=>b.addEventListener("click",()=>{
+  const d = DOCS[b.dataset.doc];
+  openModal({title:d.t, sub:"", logo:"", body:d.b});
+}));
+
+/* ================== NAV, THEME, SCROLL ================== */
+const nav = $("#nav"), burger = $("#burger"), navLinks = $("#navLinks");
+burger.addEventListener("click",()=>{
+  const open = navLinks.classList.toggle("open");
+  burger.setAttribute("aria-expanded",String(open));
+  burger.setAttribute("aria-label", open?"Close menu":"Open menu");
+});
+navLinks.addEventListener("click",e=>{
+  if(e.target.tagName==="A" && innerWidth<=940){
+    navLinks.classList.remove("open"); burger.setAttribute("aria-expanded","false");
+  }
+});
+
+const themeBtn = $("#themeBtn");
+const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+const MOON = '<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>';
+function applyTheme(t){
+  document.documentElement.dataset.theme = t;
+  const toLight = t === "dark";
+  themeBtn.setAttribute("aria-pressed", String(!toLight));
+  themeBtn.setAttribute("aria-label", toLight ? "Switch to light mode" : "Switch to dark mode");
+  $("#themeIcon").innerHTML = toLight ? SUN : MOON;
+  if(typeof readPalette === "function") readPalette();
+}
+let savedTheme = null;
+try{ savedTheme = localStorage.getItem("zemen-theme"); }catch(e){}
+themeBtn.addEventListener("click",()=>{
+  const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(next);
+  try{ localStorage.setItem("zemen-theme", next); }catch(e){}
+});
+
+const toTop = $("#toTop");
+toTop.addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));
+
+/* scrollspy — position-based, so nothing is marked current on the hero */
+const spySections = $$("main section[id]");
+const navAnchors = $$("#navLinks a").filter(a=>a.getAttribute("href").startsWith("#"));
+function markCurrent(){
+  const line = scrollY + innerHeight*0.35;
+  let active = null;
+  spySections.forEach(s=>{ if(s.offsetTop <= line) active = s; });
+  navAnchors.forEach(a=>{
+    if(active && a.getAttribute("href") === "#"+active.id) a.setAttribute("aria-current","true");
+    else a.removeAttribute("aria-current");
+  });
+}
+let ticking = false;
+addEventListener("scroll",()=>{
+  nav.classList.toggle("stuck", scrollY>10);
+  toTop.classList.toggle("show", scrollY>700);
+  if(ticking) return;
+  ticking = true;
+  requestAnimationFrame(()=>{ markCurrent(); ticking = false; });
+},{passive:true});
+markCurrent();
+
+/* ================== SEARCH ================== */
+const INDEX = [];
+const push = (title,sub,kind,anchor)=>INDEX.push({title,sub,kind,anchor,q:(title+" "+sub).toLowerCase()});
+CONCEPTS.forEach(c=>push(c.t,c.one,"concept","#what"));
+TIMELINE.forEach(e=>push(`${e.y} — ${e.t}`,e.why,"milestone","#history"));
+FORCES.forEach(f=>push(f.t,f.p,"driver","#revolution"));
+MODEL_TYPES.forEach(m=>push(m.t,m.p+" "+m.f.join(" "),"model type","#models"));
+COMPANIES.forEach(c=>push(c.n,c.short+" "+c.models+" "+c.products,"company","#companies:"+c.id));
+TRENDS.forEach(t=>push(t.t,t.p,"trend","#trends"));
+NEWS.forEach(n=>push(n.headline,n.summary+" "+n.source,"story","#news"));
+STACK.forEach(l=>push(l.n,l.d,"stack layer","#stack"));
+CP_PLAYERS.forEach(p=>push(p.t,p.d,"chips","#compute"));
+CP_FACTS.forEach(p=>push(p.t,p.d,"compute","#compute"));
+RISKS.forEach(r=>push(r.t,r.d,"risk","#risks"));
+REGIONS.forEach(r=>push(r.n,r.d,"region","#world:"+r.id));
+FUTURE.forEach(f=>push(f.t,f.d,"forecast","#future"));
+JOBS.forEach(j=>push(j.t,j.d,"work","#jobs"));
+AGENT_PARTS.concat(AGENT_RISKS,LOOP.map(l=>({t:l.t,d:l.d}))).forEach(a=>push(a.t,a.d,"agents","#agents"));
+
+const searchShade = $("#searchShade"), searchInput = $("#searchInput"), results = $("#searchResults");
+let active = -1, hits = [];
+function openSearch(){
+  searchShade.classList.add("open"); document.body.style.overflow="hidden";
+  searchInput.value=""; renderResults(""); searchInput.focus();
+}
+function closeSearch(){ searchShade.classList.remove("open"); document.body.style.overflow=""; }
+function renderResults(q){
+  q = q.trim().toLowerCase();
+  hits = q ? INDEX.filter(i=>i.q.includes(q)).slice(0,30)
+           : INDEX.filter(i=>["company","concept","milestone"].includes(i.kind)).slice(0,8);
+  active = hits.length?0:-1;
+  if(!hits.length){
+    results.innerHTML = `<div class="sr-empty">Nothing on this page matches “${esc(q)}”.<br>
+      <span style="font-size:.85rem">Try a company, a concept, a model type or a year.</span></div>`;
+    return;
+  }
+  results.innerHTML = hits.map((h,i)=>`
+    <button class="sr-item ${i===0?"active":""}" role="option" aria-selected="${i===0}" data-i="${i}">
+      <span><strong>${esc(h.title)}</strong><small>${esc(h.sub.slice(0,110))}${h.sub.length>110?"…":""}</small></span>
+      <span class="sr-kind">${esc(h.kind)}</span></button>`).join("");
+}
+function go(i){
+  const h = hits[i]; if(!h) return;
+  closeSearch();
+  const [anchor,extra] = h.anchor.split(":");
+  const el = document.querySelector(anchor);
+  if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
+  if(extra && anchor==="#companies") setTimeout(()=>openCompany(extra),650);
+  if(extra && anchor==="#world") showRegion(extra);
+}
+function setActive(i){
+  if(!hits.length) return;
+  active = (i+hits.length)%hits.length;
+  $$(".sr-item",results).forEach((b,n)=>{
+    b.classList.toggle("active",n===active); b.setAttribute("aria-selected",String(n===active));
+    if(n===active) b.scrollIntoView({block:"nearest"});
+  });
+}
+searchInput.addEventListener("input",()=>renderResults(searchInput.value));
+results.addEventListener("click",e=>{ const b=e.target.closest(".sr-item"); if(b) go(+b.dataset.i); });
+searchShade.addEventListener("click",e=>{ if(e.target===searchShade) closeSearch(); });
+$("#searchClose").addEventListener("click",closeSearch);
+$("#searchBtn").addEventListener("click",openSearch);
+$("#heroSearch").addEventListener("click",openSearch);
+searchShade.addEventListener("keydown",e=>{
+  if(e.key==="ArrowDown"){e.preventDefault();setActive(active+1);}
+  else if(e.key==="ArrowUp"){e.preventDefault();setActive(active-1);}
+  else if(e.key==="Enter"){e.preventDefault();go(active);}
+});
+addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    if(searchShade.classList.contains("open")) closeSearch();
+    else if(shade.classList.contains("open")) closeModal();
+    else if(navLinks.classList.contains("open")){navLinks.classList.remove("open");burger.setAttribute("aria-expanded","false");}
+  }
+  const typing = /^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);
+  if(!typing && (e.key==="/" || (e.key==="k" && (e.metaKey||e.ctrlKey)))){
+    e.preventDefault(); openSearch();
+  }
+});
+
+/* ================== MOTION ================== */
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* headline letters */
+const h1 = $("#heroTitle");
+if(h1 && !reduced){
+  const txt = h1.textContent;
+  let i = 0;
+  h1.innerHTML = txt.split(" ").map(word=>
+    `<span style="display:inline-block;white-space:nowrap">`+
+    [...word].map(ch=>`<span class="l" style="animation-delay:${(i++*28)}ms">${esc(ch)}</span>`).join("")+
+    `</span>`).join(" ");
+}
+
+/* reveal + counters + meters */
+const revealTargets = $$("section > .wrap > *, .stat");
+revealTargets.forEach(el=>el.classList.add("rv"));
+const io = new IntersectionObserver((entries,obs)=>{
+  entries.forEach(en=>{
+    if(!en.isIntersecting) return;
+    en.target.classList.add("in");
+    obs.unobserve(en.target);
+    $$("[data-count]",en.target).forEach(countUp);
+    $$(".meter i[data-w]",en.target).forEach(m=>m.style.width=m.dataset.w+"%");
+    $$(".bar-fill[data-w]",en.target).forEach(m=>m.style.width=m.dataset.w+"%");
+    $$(".job .pos i[data-p]",en.target).forEach(m=>m.style.left=m.dataset.p+"%");
+    const sp = en.target.querySelector("#spark"); if(sp) sp.classList.add("in");
+  });
+},{threshold:.12});
+revealTargets.forEach(el=>io.observe(el));
+
+function countUp(el){
+  const target = +el.dataset.count, suffix = el.dataset.suffix||"";
+  if(reduced){ el.textContent = target+suffix; return; }
+  const start = target>1000 ? target-90 : 0, dur = 1200, t0 = performance.now();
+  (function tick(t){
+    const p = Math.min(1,(t-t0)/dur), e = 1-Math.pow(1-p,3);
+    el.textContent = Math.round(start+(target-start)*e)+suffix;
+    if(p<1) requestAnimationFrame(tick);
+  })(t0);
+}
+
+/* agent loop pulse — pauses when the section is off-screen */
+const nodes = $$("#loop .node");
+if(nodes.length && !reduced){
+  let i = 0, timer = null;
+  const run = ()=>{ if(!timer) timer = setInterval(()=>{
+    nodes.forEach((n,k)=>n.classList.toggle("hot",k===i));
+    i = (i+1)%nodes.length;
+  },1100); };
+  const stop = ()=>{ if(timer){ clearInterval(timer); timer = null; } };
+  new IntersectionObserver(e=>{ e[0].isIntersecting ? run() : stop(); }).observe($("#loop"));
+  document.addEventListener("visibilitychange",()=>{ document.hidden ? stop() : null; });
+}
+
+/* ================== HERO CANVAS ================== */
+var readPalette;
+(function network(){
+  const cv = $("#neural"); if(!cv) return;
+  const ctx = cv.getContext("2d");
+  let W,H,dpr,layers,pulses,raf=null,PAL={};
+  const LAYOUT = [4,6,6,4,2];
+
+  readPalette = function(){
+    const s = getComputedStyle(document.documentElement);
+    PAL = {
+      line: s.getPropertyValue("--line-strong").trim(),
+      a:    s.getPropertyValue("--gold").trim(),
+      b:    s.getPropertyValue("--gold-deep").trim(),
+      c:    s.getPropertyValue("--indigo").trim(),
+      dot:  s.getPropertyValue("--text").trim()
+    };
+  };
+
+  function build(){
+    dpr = Math.min(devicePixelRatio||1,2);
+    const r = cv.getBoundingClientRect();
+    if(!r.width || !r.height) return;
+    W = r.width; H = r.height;
+    cv.width = W*dpr; cv.height = H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const padX = W*0.12, padY = H*0.12;
+    layers = LAYOUT.map((count,li)=>{
+      const x = padX + (W-2*padX)*(li/(LAYOUT.length-1));
+      return Array.from({length:count},(_,ni)=>({
+        x, y: padY + (H-2*padY)*((ni+0.5)/count),
+        r: 3 + (li===0||li===LAYOUT.length-1?1:0),
+        ph: Math.random()*Math.PI*2
+      }));
+    });
+    pulses = [];
+    readPalette();
+  }
+
+  function spawn(){
+    if(!layers || pulses.length>26) return;
+    const n = layers[0][Math.floor(Math.random()*layers[0].length)];
+    pulses.push({li:0, from:n, to:layers[1][Math.floor(Math.random()*layers[1].length)], t:0,
+      sp:0.012+Math.random()*0.012});
+  }
+
+  function draw(time){
+    if(!layers) return;
+    ctx.clearRect(0,0,W,H);
+    ctx.lineWidth = .7; ctx.strokeStyle = PAL.line; ctx.globalAlpha = .5;
+    for(let l=0;l<layers.length-1;l++)
+      for(const a of layers[l]) for(const b of layers[l+1]){
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+    ctx.globalAlpha = 1;
+    for(const p of pulses){
+      p.t += reduced?0:p.sp;
+      if(p.t>=1){
+        if(p.li<layers.length-2){
+          p.li++; p.from = p.to;
+          p.to = layers[p.li+1][Math.floor(Math.random()*layers[p.li+1].length)];
+          p.t = 0;
+        } else { p.dead = true; }
+      }
+      const x = p.from.x+(p.to.x-p.from.x)*p.t, y = p.from.y+(p.to.y-p.from.y)*p.t;
+      const g = ctx.createRadialGradient(x,y,0,x,y,9);
+      g.addColorStop(0,PAL.a); g.addColorStop(1,"transparent");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x,y,9,0,7); ctx.fill();
+      ctx.fillStyle = PAL.dot; ctx.beginPath(); ctx.arc(x,y,1.7,0,7); ctx.fill();
+    }
+    pulses = pulses.filter(p=>!p.dead);
+    layers.forEach((L,li)=>L.forEach(n=>{
+      const pulse = reduced?0:(Math.sin(time/900+n.ph)+1)/2;
+      const col = li===0?PAL.b : li===layers.length-1?PAL.c : PAL.a;
+      ctx.beginPath(); ctx.arc(n.x,n.y,n.r+pulse*1.4,0,7);
+      ctx.fillStyle = col; ctx.globalAlpha = .55+pulse*.45; ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.beginPath(); ctx.arc(n.x,n.y,n.r+5+pulse*3,0,7);
+      ctx.strokeStyle = col; ctx.globalAlpha = .16; ctx.stroke(); ctx.globalAlpha = 1;
+    }));
+    if(raf !== null) raf = requestAnimationFrame(draw);
+  }
+
+  let spawner = null;
+  function play(){
+    if(raf === null){ raf = requestAnimationFrame(draw); }
+    if(!spawner && !reduced) spawner = setInterval(spawn,420);
+  }
+  function stop(){
+    if(raf !== null){ cancelAnimationFrame(raf); raf = null; }
+    if(spawner){ clearInterval(spawner); spawner = null; }
+  }
+
+  build();
+  if(reduced){ spawn(); requestAnimationFrame(t=>draw(t)); }
+  else {
+    new IntersectionObserver(e=>{ e[0].isIntersecting ? play() : stop(); }).observe(cv);
+    document.addEventListener("visibilitychange",()=>{ document.hidden ? stop() : play(); });
+  }
+
+  let rt; addEventListener("resize",()=>{ clearTimeout(rt); rt = setTimeout(build,180); });
+})();
+
+/* theme must be applied after readPalette exists */
+applyTheme(savedTheme || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+
+})();
+</script>
+</body>
+</html>
